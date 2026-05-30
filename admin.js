@@ -1,4 +1,3 @@
-// Manzilni qotirib yozmasdan, global konfiguratsiyadan olamiz (Vercel)
 const API_URL = window.API_URL || "https://orzu-backend.vercel.app/api";
 
 const swalConfig = {
@@ -14,10 +13,20 @@ const swalConfig = {
     }
 };
 
+let allUsersData = {}; // Global O'quvchilar Bazasi
+
 document.addEventListener("DOMContentLoaded", () => {
     if(typeof lucide !== 'undefined') lucide.createIcons();
     if(sessionStorage.getItem('ORZU_Admin_Token')) {
         showDashboard();
+    }
+    
+    // O'quvchilarni jonli qidirish uchun
+    const searchInput = document.getElementById('search-user-input');
+    if(searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            renderUsersTable(allUsersData, e.target.value.trim().toLowerCase());
+        });
     }
 });
 
@@ -71,19 +80,123 @@ function loadLists() {
     loadSchedules();
     loadVideos();
     loadCerts();
+    loadUsers(); // YANGI: O'quvchilarni yuklash chaqirildi!
 }
 
-// Yordamchi funksiya: Python'ga so'rov yuborish
 function apiRequest(endpoint, method, data = null) {
     const options = {
         method: method,
         headers: { 
             'Content-Type': 'application/json',
-            'Authorization': sessionStorage.getItem('ORZU_Admin_Token') // Eng muhim joyi: Kalit shu yerda ketadi
+            'Authorization': sessionStorage.getItem('ORZU_Admin_Token')
         }
     };
     if(data) options.body = JSON.stringify(data);
     return fetch(`${API_URL}${endpoint}`, options).then(res => res.json());
+}
+
+// ==================== 👥 O'QUVCHILAR VA STATISTIKA (YANGI) ====================
+function loadUsers() {
+    apiRequest('/users', 'GET').then(res => {
+        if(res.status === 'ok' && res.data) {
+            allUsersData = res.data;
+            calculateStats(res.data);
+            renderUsersTable(res.data);
+        } else {
+            document.getElementById('users-table-body').innerHTML = '<tr><td colspan="6" class="py-8 text-center text-xs font-bold text-zinc-500 uppercase tracking-widest">Ma\'lumot topilmadi.</td></tr>';
+        }
+    });
+}
+
+function calculateStats(data) {
+    let total = 0, students = 0, referrals = 0;
+    Object.values(data).forEach(u => {
+        // Faqat ismini kiritib tugatganlarni sanaymiz
+        if(u.step === 'registered') {
+            total++;
+            if(u.is_student) students++;
+            if(u.referrals_count) referrals += u.referrals_count;
+        }
+    });
+    document.getElementById('stat-total-users').innerText = total;
+    document.getElementById('stat-students').innerText = students;
+    document.getElementById('stat-referrals').innerText = referrals;
+}
+
+function renderUsersTable(data, filterText = '') {
+    const tbody = document.getElementById('users-table-body');
+    tbody.innerHTML = '';
+    let count = 0;
+    
+    Object.keys(data).forEach(key => {
+        const u = data[key];
+        if(u.step !== 'registered') return; // Ro'yxatdan to'liq o'tmaganlarni jadvalga qo'shmaymiz
+        
+        const fullName = `${u.first_name || ''} ${u.last_name || ''}`.trim();
+        const phone = u.phone || 'Kiritilmagan';
+        
+        // Qidiruv tizimi
+        if(filterText && !fullName.toLowerCase().includes(filterText) && !phone.includes(filterText)) return;
+        
+        count++;
+        const statusText = u.is_student ? `<span class="text-emerald-400 font-bold">O'quvchi (${u.group})</span>` : `<span class="text-sky-400 font-bold">Mehmon</span>`;
+        const pinText = u.pin ? `<span class="text-indigo-400 font-bold tracking-widest">${u.pin}</span>` : `<span class="text-zinc-500 text-[10px] uppercase">Yo'q</span>`;
+        const score = u.score || 0;
+        
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-white/5 transition-colors border-b border-white/5 last:border-0";
+        tr.innerHTML = `
+            <td class="py-4 px-4 font-bold text-white">${fullName}</td>
+            <td class="py-4 px-4 text-zinc-300 font-mono text-xs">${phone}</td>
+            <td class="py-4 px-4 text-xs">${statusText}</td>
+            <td class="py-4 px-4 text-center font-black text-emerald-400">${score}</td>
+            <td class="py-4 px-4 text-center">${pinText}</td>
+            <td class="py-4 px-4 text-right">
+                <button onclick="openUserEditModal('${key}', '${fullName.replace(/'/g, "\\'")}', ${score})" class="btn-3d px-3 py-1.5 text-[10px] font-black tracking-widest text-sky-400 uppercase flex inline-flex items-center gap-1">
+                    TAHRIR <i data-lucide="edit-3" class="w-3 h-3"></i>
+                </button>
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
+    
+    if(count === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" class="py-8 text-center text-xs font-bold text-zinc-500 uppercase tracking-widest">Foydalanuvchi topilmadi.</td></tr>';
+    }
+    if(window.lucide) window.lucide.createIcons();
+}
+
+function openUserEditModal(id, name, score) {
+    document.getElementById('edit-user-id').value = id;
+    document.getElementById('edit-user-name').innerText = name;
+    document.getElementById('edit-user-score').value = score;
+    document.getElementById('edit-user-pin').value = ''; // Eski parolni ko'rsatmaydi, yangisini kutadi
+    document.getElementById('user-edit-modal').classList.remove('hidden');
+}
+
+function saveUserChanges() {
+    const id = document.getElementById('edit-user-id').value;
+    const score = parseInt(document.getElementById('edit-user-score').value) || 0;
+    const pin = document.getElementById('edit-user-pin').value.trim();
+    
+    if(pin && pin.length !== 4) return Swal.fire({...swalConfig, icon: 'warning', title: 'Xato', text: 'PIN 4 ta raqam bo\'lishi shart!'});
+    
+    Swal.fire({...swalConfig, title: "Saqlanmoqda...", didOpen: () => Swal.showLoading()});
+    
+    let data = { score: score };
+    if(pin) data.pin = pin; // Parol kiritilgan bo'lsagina uni backendga jo'natamiz
+    
+    apiRequest(`/users/${id}`, 'PUT', data).then(res => {
+        if(res.status === 'ok') {
+            document.getElementById('user-edit-modal').classList.add('hidden');
+            Swal.fire({...swalConfig, icon: 'success', title: 'Saqlandi!', timer: 1500, showConfirmButton: false});
+            loadUsers(); // Jonli jadvalni yangilash
+        } else {
+            Swal.fire({...swalConfig, icon: 'error', title: 'Xato', text: res.detail || "Saqlashda xatolik"});
+        }
+    }).catch(err => {
+        Swal.fire({...swalConfig, icon: 'error', title: 'Xatolik', text: "Server bilan aloqa yo'q"});
+    });
 }
 
 // ==================== 📅 1. JADVALLAR MANTIG'I ====================
