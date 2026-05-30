@@ -1,5 +1,5 @@
 // Manzilni qotirib yozmasdan, global konfiguratsiyadan olamiz (Vercel)
-const API_URL = window.API_URL || "https://orzu-backend.vercel.app";
+const API_URL = window.API_URL || "https://orzu-backend.vercel.app/api";
 
 const swalConfig = {
     background: 'rgba(15, 23, 42, 0.95)',
