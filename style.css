@@ -1,0 +1,48 @@
+/* 1. Asosiy karkas uchun (Menyu va Tepa qism). Burchaklari dumaloq bo'lmaydi, ekranga to'liq yopishadi */
+.glass-header-sidebar {
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+}
+
+/* 2. Ichki kartochkalar uchun (Video darslar, stat blocklar). Bular dumaloq qirrali va bir biriga xalaqit bermaydi */
+.glass-card { 
+    background: rgba(30, 41, 59, 0.4); 
+    backdrop-filter: blur(16px); 
+    -webkit-backdrop-filter: blur(16px); 
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); 
+    border-radius: 1.5rem;
+    transition: all 0.3s ease; 
+}
+
+/* Barcha matnlar bir xil, tinchlantiruvchi oq rangda bo'lishi qat'iy belgilandi */
+body {
+    color: #f8fafc;
+}
+/* ================= LOKAL VIDEOLAR UCHUN SOZLAMALAR ================= */
+/* Videodagi tugmalar bosilganda chiqadigan oq ramkani (outline) yo'qotish */
+video {
+    outline: none !important;
+}
+
+video:focus, 
+video:active {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Chrome va Safari brauzerlarining ichki pleyer qismlari uchun */
+video::-webkit-media-controls-panel,
+video::-webkit-media-controls-play-button,
+video::-webkit-media-controls-timeline,
+video::-webkit-media-controls-current-time-display,
+video::-webkit-media-controls-time-remaining-display,
+video::-webkit-media-controls-time-remaining-display,
+video::-webkit-media-controls-mute-button,
+video::-webkit-media-controls-toggle-closed-captions-button,
+video::-webkit-media-controls-volume-slider,
+video::-webkit-media-controls-fullscreen-button {
+    outline: none !important;
+    box-shadow: none !important;
+}

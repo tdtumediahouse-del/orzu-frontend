@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Orzu Admin - Boshqaruv Paneli</title>
+    
+    <link rel="icon" href="./rasmlar/logo.png" type="image/png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .input-3d {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: inset 2px 2px 8px rgba(0, 0, 0, 0.8), inset -1px -1px 4px rgba(255, 255, 255, 0.02);
+            transition: border-color 0.3s ease;
+        }
+        .input-3d:focus { border-color: rgba(255, 255, 255, 0.2); }
+        .btn-3d { background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(0,0,0,0.3)); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 2px 4px 10px rgba(0,0,0,0.4); transition: all 0.2s; }
+        .btn-3d:active { transform: translateY(2px) scale(0.98); }
+        .btn-3d-red { background: linear-gradient(145deg, rgba(239, 68, 68, 0.15), rgba(153, 27, 27, 0.4)); border: 1px solid rgba(239, 68, 68, 0.4); color: #f87171; transition: all 0.2s; }
+        .btn-3d-red:active { transform: translateY(2px) scale(0.98); }
+    </style>
+</head>
+<body class="w-full h-screen flex relative text-zinc-100 bg-slate-950 overflow-hidden">
+
+    <div class="fixed inset-0 z-[-1]">
+        <img src="./rasmlar/fon.png" class="w-full h-full object-cover opacity-20 mix-blend-overlay" alt="Background">
+    </div>
+
+    <div id="admin-login-screen" class="absolute inset-0 z-50 flex items-center justify-center backdrop-blur-xl bg-black/80 animate__animated animate__fadeIn">
+        <div class="glass-card p-8 w-full max-w-sm text-center shadow-2xl relative">
+            <img src="./rasmlar/logo.png" alt="Logo" class="w-20 h-20 mx-auto mb-4 rounded-full bg-white shadow-lg">
+            <h2 class="text-xl font-black mb-6 uppercase tracking-widest text-sky-400">Admin Pult</h2>
+            
+            <input type="password" id="admin-pass-input" placeholder="MAXFIY PAROL..." class="input-3d w-full p-4 mb-6 rounded-2xl outline-none text-center tracking-[0.3em] font-black text-white placeholder-zinc-600 uppercase text-sm">
+            
+            <button onclick="checkAdminLogin()" class="btn-3d w-full py-4 rounded-2xl font-black uppercase tracking-widest text-sm text-white flex items-center justify-center gap-2">
+                <i data-lucide="shield-check" class="w-5 h-5"></i> KIRISH
+            </button>
+        </div>
+    </div>
+
+    <div id="admin-dashboard-screen" class="hidden w-full h-screen flex flex-col md:flex-row overflow-hidden">
+        
+        <div class="w-full md:w-64 h-auto md:h-screen self-stretch flex flex-col justify-between glass-header-sidebar border-r border-white/5 z-20 shrink-0">
+            <div class="h-16 lg:h-20 flex items-center justify-center gap-3 border-b border-white/5 px-4 shrink-0">
+                <i data-lucide="shield" class="w-6 h-6 text-sky-400"></i>
+                <span class="font-black tracking-widest text-white uppercase text-sm">Boshqaruv</span>
+            </div>
+            
+            <div class="flex-1 flex flex-col pt-4 px-3 gap-2 overflow-y-auto minimal-scroll pb-6">
+                <button onclick="openAdminTab('tab-schedules', this)" class="menu-item active flex items-center p-3.5 rounded-xl font-bold text-xs uppercase tracking-widest text-white bg-white/10 transition-all">
+                    <i data-lucide="calendar-days" class="w-4 h-4 mr-3 opacity-70"></i> DARS JADVALLARI
+                </button>
+                <button onclick="openAdminTab('tab-videos', this)" class="menu-item flex items-center p-3.5 rounded-xl font-bold text-xs uppercase tracking-widest text-zinc-400 hover:text-white transition-all hover:bg-white/5">
+                    <i data-lucide="play-circle" class="w-4 h-4 mr-3 opacity-70"></i> VIDEO DARSLAR
+                </button>
+                <button onclick="openAdminTab('tab-certs', this)" class="menu-item flex items-center p-3.5 rounded-xl font-bold text-xs uppercase tracking-widest text-zinc-400 hover:text-white transition-all hover:bg-white/5">
+                    <i data-lucide="award" class="w-4 h-4 mr-3 opacity-70"></i> SERTIFIKATLAR
+                </button>
+            </div>
+            
+            <div class="px-3 pb-6 pt-4 border-t border-white/5 bg-black/20 shrink-0">
+                <button onclick="logoutAdmin()" class="btn-3d-red flex items-center justify-center gap-2 w-full p-3.5 rounded-xl font-bold text-xs uppercase tracking-widest">
+                    <i data-lucide="log-out" class="w-4 h-4"></i> Chiqish
+                </button>
+            </div>
+        </div>
+
+        <div class="flex-1 overflow-y-auto minimal-scroll p-4 sm:p-6 lg:p-8 relative">
+            
+            <div id="tab-schedules" class="admin-tab-content w-full max-w-4xl mx-auto">
+                <h2 class="text-xl font-black mb-6 text-sky-400 uppercase tracking-widest border-b border-white/5 pb-4 flex items-center gap-2"><i data-lucide="calendar-days" class="w-6 h-6"></i> Dars Jadvallari Bazasi</h2>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="glass-card p-6 sm:p-8">
+                        <h3 class="text-xs font-black text-white mb-4 uppercase tracking-widest flex items-center gap-2"><i data-lucide="plus-circle" class="w-4 h-4 text-emerald-400"></i> Yangi Jadval Qo'shish</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <input type="text" id="sch-group" placeholder="Guruh nomi (Ingliz tili A1)" class="input-3d w-full p-4 rounded-xl text-white font-bold outline-none text-sm">
+                            <select id="sch-room" class="input-3d w-full p-4 rounded-xl text-white font-bold outline-none text-sm cursor-pointer bg-slate-900 appearance-none">
+                                <option value="">-- Xonani tanlang --</option>
+                                <option value="1">1-xona</option>
+                                <option value="2">2-xona</option>
+                                <option value="3">3-xona</option>
+                                <option value="4">4-xona</option>
+                                <option value="5">5-xona</option>
+                                <option value="6">6-xona</option>
+                                <option value="7A">7A-xona</option>
+                                <option value="8">8-xona</option>
+                                <option value="9A">9A-xona</option>
+                                <option value="9B">9B-xona</option>
+                                <option value="10A">10A-xona</option>
+                                <option value="10B">10B-xona</option>
+                            </select>
+                        </div>
+                        
+                        <input type="text" id="sch-teacher" placeholder="O'qituvchi Ismi" class="input-3d w-full p-4 mb-4 rounded-xl text-white font-bold outline-none text-sm">
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <input type="text" id="sch-phone" placeholder="Telefon (+998...)" class="input-3d w-full p-4 rounded-xl text-white font-bold outline-none text-sm">
+                            <input type="text" id="sch-photo" placeholder="Rasm havolasi (URL)" class="input-3d w-full p-4 rounded-xl text-white font-bold outline-none text-sm text-sky-400">
+                        </div>
+
+                        <textarea id="sch-level" rows="2" placeholder="O'qituvchi darajasi/Sertifikatlari..." class="input-3d w-full p-4 mb-4 rounded-xl text-white text-xs outline-none minimal-scroll resize-y text-emerald-400"></textarea>
+
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <input type="text" id="sch-days" placeholder="Kunlar (Dush-Chor)" class="input-3d w-full p-4 rounded-xl text-white font-bold outline-none text-xs">
+                            <input type="text" id="sch-time" placeholder="Vaqt (14:00 - 16:00)" class="input-3d w-full p-4 rounded-xl text-white font-bold outline-none text-xs">
+                        </div>
+                        
+                        <button onclick="saveSchedule()" class="btn-3d w-full py-4 rounded-xl font-black uppercase tracking-widest text-sm text-emerald-400 flex justify-center items-center gap-2 border border-emerald-500/30">
+                            SAQLASH <i data-lucide="save" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="glass-card p-6 sm:p-8 h-fit">
+                        <h3 class="text-xs font-black text-rose-400 mb-4 uppercase tracking-widest flex items-center gap-2"><i data-lucide="trash-2" class="w-4 h-4"></i> Jadvalni O'chirish</h3>
+                        
+                        <select id="del-sch-select" class="input-3d w-full p-4 mb-6 rounded-xl text-white font-bold outline-none cursor-pointer appearance-none text-sm">
+                            <option value="">-- Jadvalni tanlang --</option>
+                        </select>
+                        
+                        <button onclick="deleteSchedule()" class="btn-3d-red w-full py-4 rounded-xl font-black uppercase tracking-widest text-sm flex justify-center items-center gap-2">
+                            O'chirish <i data-lucide="x-circle" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-videos" class="admin-tab-content hidden w-full max-w-4xl mx-auto">
+                <h2 class="text-xl font-black mb-6 text-rose-400 uppercase tracking-widest border-b border-white/5 pb-4 flex items-center gap-2"><i data-lucide="play-circle" class="w-6 h-6"></i> Video Darslar Bazasi</h2>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="glass-card p-6 sm:p-8">
+                        <h3 class="text-xs font-black text-white mb-4 uppercase tracking-widest flex items-center gap-2"><i data-lucide="plus-circle" class="w-4 h-4 text-emerald-400"></i> Yangi Video Qo'shish</h3>
+                        
+                        <input type="text" id="vid-fan" placeholder="Fan (Masalan: Ingliz tili)" class="input-3d w-full p-4 mb-4 rounded-xl text-white font-bold outline-none text-sm">
+                        <input type="text" id="vid-mavzu" placeholder="Mavzu nomi" class="input-3d w-full p-4 mb-4 rounded-xl text-white font-bold outline-none text-sm">
+                        <input type="text" id="vid-link" placeholder="YouTube Havola (https://youtu.be/...)" class="input-3d w-full p-4 mb-4 rounded-xl text-white font-bold outline-none text-sm text-sky-400">
+                        <input type="text" id="vid-muallif" placeholder="Muallif (O'qituvchi)" class="input-3d w-full p-4 mb-6 rounded-xl text-white font-bold outline-none text-xs">
+                        
+                        <button onclick="saveVideo()" class="btn-3d w-full py-4 rounded-xl font-black uppercase tracking-widest text-sm text-emerald-400 flex justify-center items-center gap-2 border border-emerald-500/30">
+                            SAQLASH <i data-lucide="upload" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+
+                    <div class="glass-card p-6 sm:p-8 h-fit">
+                        <h3 class="text-xs font-black text-rose-400 mb-4 uppercase tracking-widest flex items-center gap-2"><i data-lucide="trash-2" class="w-4 h-4"></i> Videoni O'chirish</h3>
+                        
+                        <select id="del-vid-select" class="input-3d w-full p-4 mb-6 rounded-xl text-white font-bold outline-none cursor-pointer appearance-none text-sm">
+                            <option value="">-- Videoni tanlang --</option>
+                        </select>
+                        
+                        <button onclick="deleteVideo()" class="btn-3d-red w-full py-4 rounded-xl font-black uppercase tracking-widest text-sm flex justify-center items-center gap-2">
+                            O'chirish <i data-lucide="x-circle" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-certs" class="admin-tab-content hidden w-full max-w-4xl mx-auto">
+                <h2 class="text-xl font-black mb-6 text-emerald-400 uppercase tracking-widest border-b border-white/5 pb-4 flex items-center gap-2"><i data-lucide="award" class="w-6 h-6"></i> Sertifikatlar Bazasi</h2>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="glass-card p-6 sm:p-8">
+                        <h3 class="text-xs font-black text-white mb-4 uppercase tracking-widest flex items-center gap-2"><i data-lucide="plus-circle" class="w-4 h-4 text-emerald-400"></i> Sertifikat Qo'shish</h3>
+                        
+                        <input type="text" id="cert-name" placeholder="O'quvchining Ism-Familiyasi" class="input-3d w-full p-4 mb-4 rounded-xl text-white font-bold outline-none text-sm">
+                        <input type="text" id="cert-id" placeholder="Maxsus ID raqam (Masalan: ORZU-001)" class="input-3d w-full p-4 mb-4 rounded-xl text-white font-bold outline-none text-sm text-amber-400">
+                        <input type="text" id="cert-course" placeholder="Yo'nalish (Ingliz tili B2)" class="input-3d w-full p-4 mb-4 rounded-xl text-white font-bold outline-none text-xs">
+                        <textarea id="cert-img" rows="3" placeholder="Sertifikat rasmi havolasi (URL)..." class="input-3d w-full p-4 mb-6 rounded-xl text-white text-xs outline-none minimal-scroll resize-y text-sky-400"></textarea>
+                        
+                        <button onclick="saveCert()" class="btn-3d w-full py-4 rounded-xl font-black uppercase tracking-widest text-sm text-emerald-400 flex justify-center items-center gap-2 border border-emerald-500/30">
+                            SAQLASH <i data-lucide="save" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="glass-card p-6 sm:p-8 h-fit">
+                        <h3 class="text-xs font-black text-rose-400 mb-4 uppercase tracking-widest flex items-center gap-2"><i data-lucide="trash-2" class="w-4 h-4"></i> Sertifikatni O'chirish</h3>
+                        
+                        <select id="del-cert-select" class="input-3d w-full p-4 mb-6 rounded-xl text-white font-bold outline-none cursor-pointer appearance-none text-sm">
+                            <option value="">-- Sertifikatni tanlang --</option>
+                        </select>
+                        
+                        <button onclick="deleteCert()" class="btn-3d-red w-full py-4 rounded-xl font-black uppercase tracking-widest text-sm flex justify-center items-center gap-2">
+                            O'chirish <i data-lucide="x-circle" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+    <script src="admin.js"></script>
+</body>
+</html>
