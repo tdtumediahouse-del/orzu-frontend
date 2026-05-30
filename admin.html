@@ -41,22 +41,35 @@
             overscroll-behavior:none;
         }
 
-        body::before, body::after{
-            content:""; position:fixed; width:42vmax; height:42vmax; border-radius:999px;
-            pointer-events:none; z-index:0; filter:blur(58px); opacity:.22;
-            transform:translate3d(0,0,0); will-change:transform;
+        /* Orqa fondagi suzuvchi suyuqlik effektlari */
+        body::before,
+        body::after{
+            content:"";
+            position:fixed;
+            width:42vmax;
+            height:42vmax;
+            border-radius:999px;
+            pointer-events:none;
+            z-index:0;
+            filter:blur(58px);
+            opacity:.22;
+            transform:translate3d(0,0,0);
+            will-change:transform;
             animation:orzuLiquidFloat 18s ease-in-out infinite alternate;
         }
 
         body::before{
-            left:-15vmax; top:-14vmax;
+            left:-15vmax;
+            top:-14vmax;
             background:linear-gradient(135deg,rgba(14,165,233,.72),rgba(99,102,241,.25));
         }
 
         body::after{
-            right:-18vmax; bottom:-18vmax;
+            right:-18vmax;
+            bottom:-18vmax;
             background:linear-gradient(135deg,rgba(16,185,129,.55),rgba(244,63,94,.24));
-            animation-duration:22s; animation-delay:-5s;
+            animation-duration:22s;
+            animation-delay:-5s;
         }
 
         @keyframes orzuLiquidFloat{
@@ -66,44 +79,73 @@
         }
 
         .glass-header-sidebar {
-            position:relative; isolation:isolate;
+            position:relative;
+            isolation:isolate;
             background: linear-gradient(145deg, rgba(15,23,42,0.6), rgba(2,6,23,0.4));
             backdrop-filter: blur(24px) saturate(155%);
             -webkit-backdrop-filter: blur(24px) saturate(155%);
         }
 
         .glass-card {
-            position:relative; isolation:isolate; border-radius: 2rem;
+            position:relative;
+            isolation:isolate;
+            border-radius: 2rem;
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
             border: 1px solid rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(24px) saturate(160%); -webkit-backdrop-filter: blur(24px) saturate(160%);
-            box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.12), inset -3px -3px 6px rgba(0, 0, 0, 0.4), 0 15px 35px rgba(0, 0, 0, 0.45), 0 5px 15px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); transform: translateZ(0);
+            backdrop-filter: blur(24px) saturate(160%);
+            -webkit-backdrop-filter: blur(24px) saturate(160%);
+            box-shadow: 
+                inset 2px 2px 4px rgba(255, 255, 255, 0.12),
+                inset -3px -3px 6px rgba(0, 0, 0, 0.4),
+                0 15px 35px rgba(0, 0, 0, 0.45),
+                0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transform: translateZ(0);
         }
 
         .glass-card:hover {
             transform: translateY(-4px) perspective(1000px) rotateX(1deg) rotateY(-0.5deg) scale(1.01);
             border-color: rgba(255, 255, 255, 0.15);
-            box-shadow: inset 2px 2px 5px rgba(255, 255, 255, 0.2), inset -3px -3px 8px rgba(0, 0, 0, 0.5), 0 25px 50px rgba(0, 0, 0, 0.55), 0 10px 25px rgba(56, 189, 248, 0.15);
+            box-shadow: 
+                inset 2px 2px 5px rgba(255, 255, 255, 0.2),
+                inset -3px -3px 8px rgba(0, 0, 0, 0.5),
+                0 25px 50px rgba(0, 0, 0, 0.55),
+                0 10px 25px rgba(56, 189, 248, 0.15);
         }
 
         .menu-item {
-            position:relative; overflow:hidden; outline:none; border-radius: 1.25rem; transform:translateZ(0); transition: all 0.3s ease;
+            position:relative;
+            overflow:hidden;
+            outline:none;
+            border-radius: 1.25rem;
+            transform:translateZ(0);
+            transition: all 0.3s ease;
         }
 
         .menu-item::before {
-            content:""; position:absolute; inset:0; border-radius:inherit;
+            content:"";
+            position:absolute;
+            inset:0;
+            border-radius:inherit;
             background:linear-gradient(120deg,rgba(255,255,255,.18),transparent 45%,rgba(56,189,248,.12));
-            opacity:0; transition:opacity .25s ease; pointer-events:none;
+            opacity:0;
+            transition:opacity .25s ease;
+            pointer-events:none;
         }
 
-        .menu-item:hover::before, .menu-item.active::before { opacity:1; }
+        .menu-item:hover::before,
+        .menu-item.active::before {
+            opacity:1;
+        }
 
         .menu-item.active {
             color:#fff !important;
             background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(255, 255, 255, 0.05)) !important;
             border: 1px solid rgba(125, 211, 252, 0.2);
-            box-shadow: inset 1px 1px 3px rgba(255, 255, 255, 0.15), inset -1px -1px 4px rgba(0, 0, 0, 0.2), 0 10px 25px rgba(56, 189, 248, 0.15);
+            box-shadow: 
+                inset 1px 1px 3px rgba(255, 255, 255, 0.15),
+                inset -1px -1px 4px rgba(0, 0, 0, 0.2),
+                0 10px 25px rgba(56, 189, 248, 0.15);
         }
 
         .minimal-scroll{ scrollbar-width:thin; scrollbar-color:rgba(255,255,255,.22) transparent; }
@@ -111,15 +153,32 @@
         .minimal-scroll::-webkit-scrollbar-thumb{ background:rgba(255,255,255,.22); border-radius:999px; }
 
         .input-3d {
-            background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 1.25rem;
-            box-shadow: inset 3px 3px 8px rgba(0, 0, 0, 0.8), inset -2px -2px 5px rgba(255, 255, 255, 0.03); transition: all 0.3s ease;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1.25rem;
+            box-shadow: inset 3px 3px 8px rgba(0, 0, 0, 0.8), inset -2px -2px 5px rgba(255, 255, 255, 0.03);
+            transition: all 0.3s ease;
         }
-        .input-3d:focus { border-color: rgba(56, 189, 248, 0.5); box-shadow: inset 3px 3px 8px rgba(0, 0, 0, 0.8), 0 0 15px rgba(56, 189, 248, 0.2); background: rgba(0,0,0,0.6); }
+        .input-3d:focus { 
+            border-color: rgba(56, 189, 248, 0.5); 
+            box-shadow: inset 3px 3px 8px rgba(0, 0, 0, 0.8), 0 0 15px rgba(56, 189, 248, 0.2); 
+            background: rgba(0,0,0,0.6);
+        }
         
-        .btn-3d { background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(0,0,0,0.4)); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 1.25rem; box-shadow: 3px 5px 12px rgba(0,0,0,0.5), inset 1px 1px 3px rgba(255,255,255,0.2); transition: all 0.2s; }
+        .btn-3d { 
+            background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(0,0,0,0.4)); 
+            border: 1px solid rgba(255, 255, 255, 0.15); 
+            border-radius: 1.25rem;
+            box-shadow: 3px 5px 12px rgba(0,0,0,0.5), inset 1px 1px 3px rgba(255,255,255,0.2); 
+            transition: all 0.2s; 
+        }
         .btn-3d:active { transform: translateY(3px) scale(0.98); box-shadow: inset 3px 3px 8px rgba(0,0,0,0.6); }
         
-        .btn-3d-red { background: linear-gradient(145deg, rgba(239, 68, 68, 0.2), rgba(153, 27, 27, 0.5)); border: 1px solid rgba(239, 68, 68, 0.5); border-radius: 1.25rem; color: #fca5a5; box-shadow: 3px 5px 12px rgba(0,0,0,0.5), inset 1px 1px 3px rgba(255,255,255,0.2); transition: all 0.2s; }
+        .btn-3d-red { 
+            background: linear-gradient(145deg, rgba(239, 68, 68, 0.2), rgba(153, 27, 27, 0.5)); 
+            border: 1px solid rgba(239, 68, 68, 0.5); border-radius: 1.25rem; color: #fca5a5; 
+            box-shadow: 3px 5px 12px rgba(0,0,0,0.5), inset 1px 1px 3px rgba(255,255,255,0.2); transition: all 0.2s; 
+        }
         .btn-3d-red:active { transform: translateY(3px) scale(0.98); box-shadow: inset 3px 3px 8px rgba(0,0,0,0.8); }
     </style>
 </head>
@@ -151,7 +210,10 @@
             </div>
             
             <div class="flex-1 flex flex-col pt-4 px-3 gap-2 overflow-y-auto minimal-scroll pb-6">
-                <button onclick="openAdminTab('tab-schedules', this)" class="menu-item active flex items-center p-3.5 font-bold text-xs uppercase tracking-widest text-white transition-all">
+                <button onclick="openAdminTab('tab-users', this)" class="menu-item active flex items-center p-3.5 font-bold text-xs uppercase tracking-widest text-white transition-all">
+                    <i data-lucide="users" class="w-4 h-4 mr-3 opacity-70"></i> O'QUVCHILAR
+                </button>
+                <button onclick="openAdminTab('tab-schedules', this)" class="menu-item flex items-center p-3.5 font-bold text-xs uppercase tracking-widest text-zinc-400 hover:text-white transition-all">
                     <i data-lucide="calendar-days" class="w-4 h-4 mr-3 opacity-70"></i> DARS JADVALLARI
                 </button>
                 <button onclick="openAdminTab('tab-videos', this)" class="menu-item flex items-center p-3.5 font-bold text-xs uppercase tracking-widest text-zinc-400 hover:text-white transition-all">
@@ -171,7 +233,57 @@
 
         <div class="flex-1 overflow-y-auto minimal-scroll p-4 sm:p-6 lg:p-8 relative">
             
-            <div id="tab-schedules" class="admin-tab-content w-full max-w-4xl mx-auto">
+            <div id="tab-users" class="admin-tab-content w-full max-w-6xl mx-auto">
+                <h2 class="text-xl font-black mb-6 text-indigo-400 uppercase tracking-widest border-b border-white/5 pb-4 flex items-center gap-2"><i data-lucide="users" class="w-6 h-6"></i> O'quvchilar va Statistika</h2>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">
+                    <div class="glass-card p-6 flex flex-col gap-2 relative overflow-hidden">
+                        <i data-lucide="users" class="absolute -right-4 -bottom-4 w-24 h-24 opacity-5 text-indigo-400"></i>
+                        <span class="text-[10px] font-bold uppercase tracking-widest opacity-70 text-indigo-300">Ro'yxatdan O'tganlar</span>
+                        <span class="text-3xl font-black text-white" id="stat-total-users">0</span>
+                    </div>
+                    <div class="glass-card p-6 flex flex-col gap-2 relative overflow-hidden">
+                        <i data-lucide="graduation-cap" class="absolute -right-4 -bottom-4 w-24 h-24 opacity-5 text-emerald-400"></i>
+                        <span class="text-[10px] font-bold uppercase tracking-widest opacity-70 text-emerald-300">Markaz O'quvchilari</span>
+                        <span class="text-3xl font-black text-white" id="stat-students">0</span>
+                    </div>
+                    <div class="glass-card p-6 flex flex-col gap-2 relative overflow-hidden">
+                        <i data-lucide="link" class="absolute -right-4 -bottom-4 w-24 h-24 opacity-5 text-rose-400"></i>
+                        <span class="text-[10px] font-bold uppercase tracking-widest opacity-70 text-rose-300">Referal (Do'stlar)</span>
+                        <span class="text-3xl font-black text-white" id="stat-referrals">0</span>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6">
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
+                        <h3 class="text-xs font-black text-white uppercase tracking-widest flex items-center gap-2"><i data-lucide="list" class="w-4 h-4 text-sky-400"></i> O'quvchilar Ro'yxati</h3>
+                        <div class="relative w-full md:w-72">
+                            <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500"></i>
+                            <input type="text" id="search-user-input" placeholder="Ism yoki raqam orqali..." class="input-3d w-full py-3 pl-10 pr-4 text-xs font-bold text-white outline-none">
+                        </div>
+                    </div>
+                    
+                    <div class="overflow-x-auto minimal-scroll rounded-xl border border-white/5">
+                        <table class="w-full text-left border-collapse min-w-[800px]">
+                            <thead class="bg-white/5">
+                                <tr class="text-[10px] uppercase tracking-widest text-zinc-400">
+                                    <th class="py-4 px-4 font-black">F.I.SH</th>
+                                    <th class="py-4 px-4 font-black">Aloqa</th>
+                                    <th class="py-4 px-4 font-black">Holati / Guruh</th>
+                                    <th class="py-4 px-4 font-black text-center">Ball</th>
+                                    <th class="py-4 px-4 font-black text-center">Parol (PIN)</th>
+                                    <th class="py-4 px-4 font-black text-right">Harakat</th>
+                                </tr>
+                            </thead>
+                            <tbody id="users-table-body" class="text-sm divide-y divide-white/5">
+                                <tr><td colspan="6" class="py-8 text-center text-xs font-bold text-zinc-500 uppercase tracking-widest">Ma'lumotlar yuklanmoqda...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-schedules" class="admin-tab-content hidden w-full max-w-4xl mx-auto">
                 <h2 class="text-xl font-black mb-6 text-sky-400 uppercase tracking-widest border-b border-white/5 pb-4 flex items-center gap-2"><i data-lucide="calendar-days" class="w-6 h-6"></i> Dars Jadvallari Bazasi</h2>
                 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -295,6 +407,35 @@
         </div>
     </div>
     
+    <div id="user-edit-modal" class="fixed inset-0 z-[100] hidden items-center justify-center backdrop-blur-xl bg-black/80 animate__animated animate__fadeIn">
+        <div class="glass-card p-8 w-full max-w-sm m-4 relative">
+            <button onclick="document.getElementById('user-edit-modal').classList.add('hidden')" class="absolute top-4 right-4 text-zinc-500 hover:text-white transition-colors">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center border border-indigo-500/30">
+                <i data-lucide="user-cog" class="w-8 h-8"></i>
+            </div>
+            <h3 class="text-lg font-black text-white mb-6 uppercase tracking-widest text-center" id="edit-user-name">O'quvchi</h3>
+            
+            <input type="hidden" id="edit-user-id">
+            
+            <div class="mb-4">
+                <label class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-2 block ml-1">To'plagan Balli</label>
+                <input type="number" id="edit-user-score" class="input-3d w-full p-4 text-white font-black outline-none text-sm text-emerald-400 text-center">
+            </div>
+            
+            <div class="mb-6">
+                <label class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-2 block ml-1">Yangi Parol (PIN)</label>
+                <input type="text" id="edit-user-pin" placeholder="••••" maxlength="4" class="input-3d w-full p-4 text-white font-black outline-none text-lg tracking-[0.5em] text-center">
+                <p class="text-[9px] text-zinc-500 mt-2 text-center uppercase tracking-widest">Faqat o'zgartirish kerak bo'lsa kiriting.</p>
+            </div>
+            
+            <button onclick="saveUserChanges()" class="btn-3d w-full py-4 font-black uppercase tracking-widest text-sm text-indigo-400 flex justify-center items-center gap-2">
+                SAQLASH <i data-lucide="check-circle" class="w-4 h-4"></i>
+            </button>
+        </div>
+    </div>
+
     <script src="js/core/db-config.js"></script>
     <script src="admin.js"></script>
 </body>
