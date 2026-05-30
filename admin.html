@@ -219,10 +219,8 @@
             <img src="./rasmlar/logo.png" alt="Logo" class="w-20 h-20 mx-auto mb-4 rounded-full bg-white shadow-lg">
             <h2 class="text-xl font-black mb-6 uppercase tracking-widest text-sky-400">Admin Pult</h2>
             
-            <input type="password" id="admin-pass-input" placeholder="MAXFIY PAROL..." class="input-3d w-full p-4 mb-6 outline-none text-center tracking-[0.3em] font-black text-white placeholder-zinc-600 uppercase text-sm">
-            
-            <button onclick="checkAdminLogin()" class="btn-3d w-full py-4 font-black uppercase tracking-widest text-sm text-white flex items-center justify-center gap-2">
-                <i data-lucide="shield-check" class="w-5 h-5"></i> KIRISH
+            <button onclick="loginWithGoogle()" class="btn-3d w-full py-4 font-black uppercase tracking-widest text-sm text-white flex items-center justify-center gap-3">
+                <i class="fa-brands fa-google text-lg text-rose-400"></i> GOOGLE ORQALI KIRISH
             </button>
         </div>
     </div>
@@ -381,6 +379,56 @@
     </div>
     
     <script src="js/core/db-config.js"></script>
+    
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBjaBAdctGDEUJl_nQcGvartrCyxUFvphQ",
+            authDomain: "orzu-education.firebaseapp.com",
+            databaseURL: "https://orzu-education-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "orzu-education",
+            storageBucket: "orzu-education.firebasestorage.app",
+            messagingSenderId: "425717261737",
+            appId: "1:425717261737:web:bb063c5773c724284bd0b8",
+            measurementId: "G-5162FR9PSN"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        window.loginWithGoogle = function() {
+            Swal.fire({
+                background: 'rgba(15, 23, 42, 0.95)', color: '#f8fafc',
+                title: 'Kutilmoqda...', text: 'Google tekshiruvi...',
+                didOpen: () => Swal.showLoading()
+            });
+            
+            signInWithPopup(auth, provider).then((result) => {
+                return result.user.getIdToken();
+            }).then((idToken) => {
+                fetch(window.API_URL + '/login/google', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ token: idToken })
+                }).then(res => res.json()).then(data => {
+                    if(data.status === 'ok') {
+                        sessionStorage.setItem('ORZU_Admin_Token', data.token);
+                        Swal.close();
+                        if(typeof showDashboard === 'function') showDashboard(); 
+                        else window.location.reload();
+                    } else {
+                        Swal.fire({ icon: 'error', title: 'Xato', text: data.detail });
+                    }
+                }).catch(err => Swal.fire({ icon: 'error', title: 'Xatolik', text: 'Server bilan aloqa yo\'q!' }));
+            }).catch((error) => {
+                Swal.fire({ icon: 'error', title: 'Bekor qilindi', text: 'Google orqali kirilmadi!' });
+            });
+        }
+    </script>
+    
     <script src="admin.js"></script>
 </body>
 </html>
