@@ -14,23 +14,204 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
+        :root{
+            --orzu-bg-1:#020617;
+            --orzu-bg-2:#07111f;
+            --orzu-glass:rgba(255,255,255,.075);
+            --orzu-glass-strong:rgba(255,255,255,.12);
+            --orzu-border:rgba(255,255,255,.16);
+            --orzu-border-soft:rgba(255,255,255,.09);
+            --orzu-cyan:rgba(56,189,248,.35);
+            --orzu-emerald:rgba(16,185,129,.24);
+            --orzu-rose:rgba(244,63,94,.22);
+        }
+
+        *{
+            box-sizing:border-box;
+            -webkit-tap-highlight-color:transparent;
+        }
+
+        html,body{
+            min-height:100%;
+            background:
+                radial-gradient(circle at 14% 12%, rgba(56,189,248,.18), transparent 30%),
+                radial-gradient(circle at 84% 18%, rgba(244,63,94,.13), transparent 28%),
+                radial-gradient(circle at 58% 92%, rgba(16,185,129,.13), transparent 32%),
+                linear-gradient(135deg,var(--orzu-bg-1),var(--orzu-bg-2) 45%,#020617);
+            overscroll-behavior:none;
+        }
+
+        /* Orqa fondagi suzuvchi suyuqlik effektlari */
+        body::before,
+        body::after{
+            content:"";
+            position:fixed;
+            width:42vmax;
+            height:42vmax;
+            border-radius:999px;
+            pointer-events:none;
+            z-index:0;
+            filter:blur(58px);
+            opacity:.22;
+            transform:translate3d(0,0,0);
+            will-change:transform;
+            animation:orzuLiquidFloat 18s ease-in-out infinite alternate;
+        }
+
+        body::before{
+            left:-15vmax;
+            top:-14vmax;
+            background:linear-gradient(135deg,rgba(14,165,233,.72),rgba(99,102,241,.25));
+        }
+
+        body::after{
+            right:-18vmax;
+            bottom:-18vmax;
+            background:linear-gradient(135deg,rgba(16,185,129,.55),rgba(244,63,94,.24));
+            animation-duration:22s;
+            animation-delay:-5s;
+        }
+
+        @keyframes orzuLiquidFloat{
+            0%{transform:translate3d(0,0,0) scale(1) rotate(0deg);}
+            50%{transform:translate3d(5vmax,2vmax,0) scale(1.08) rotate(18deg);}
+            100%{transform:translate3d(2vmax,6vmax,0) scale(.96) rotate(-12deg);}
+        }
+
+        .glass-header-sidebar {
+            position:relative;
+            isolation:isolate;
+            background: linear-gradient(145deg, rgba(15,23,42,0.6), rgba(2,6,23,0.4));
+            backdrop-filter: blur(24px) saturate(155%);
+            -webkit-backdrop-filter: blur(24px) saturate(155%);
+        }
+
+        /* Yumshoq 3D Shaffof Kartalar (Glassmorphism + Neumorphism) */
+        .glass-card {
+            position:relative;
+            isolation:isolate;
+            border-radius: 2rem;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(24px) saturate(160%);
+            -webkit-backdrop-filter: blur(24px) saturate(160%);
+            box-shadow: 
+                inset 2px 2px 4px rgba(255, 255, 255, 0.12),
+                inset -3px -3px 6px rgba(0, 0, 0, 0.4),
+                0 15px 35px rgba(0, 0, 0, 0.45),
+                0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transform: translateZ(0);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-4px) perspective(1000px) rotateX(1deg) rotateY(-0.5deg) scale(1.01);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 
+                inset 2px 2px 5px rgba(255, 255, 255, 0.2),
+                inset -3px -3px 8px rgba(0, 0, 0, 0.5),
+                0 25px 50px rgba(0, 0, 0, 0.55),
+                0 10px 25px rgba(56, 189, 248, 0.15);
+        }
+
+        .menu-item {
+            position:relative;
+            overflow:hidden;
+            outline:none;
+            border-radius: 1.25rem;
+            transform:translateZ(0);
+            transition: all 0.3s ease;
+        }
+
+        .menu-item::before {
+            content:"";
+            position:absolute;
+            inset:0;
+            border-radius:inherit;
+            background:linear-gradient(120deg,rgba(255,255,255,.18),transparent 45%,rgba(56,189,248,.12));
+            opacity:0;
+            transition:opacity .25s ease;
+            pointer-events:none;
+        }
+
+        .menu-item:hover::before,
+        .menu-item.active::before {
+            opacity:1;
+        }
+
+        .menu-item.active {
+            color:#fff !important;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(255, 255, 255, 0.05)) !important;
+            border: 1px solid rgba(125, 211, 252, 0.2);
+            box-shadow: 
+                inset 1px 1px 3px rgba(255, 255, 255, 0.15),
+                inset -1px -1px 4px rgba(0, 0, 0, 0.2),
+                0 10px 25px rgba(56, 189, 248, 0.15);
+        }
+
+        .minimal-scroll{
+            scrollbar-width:thin;
+            scrollbar-color:rgba(255,255,255,.22) transparent;
+        }
+
+        .minimal-scroll::-webkit-scrollbar{
+            width:6px;
+            height:6px;
+        }
+
+        .minimal-scroll::-webkit-scrollbar-thumb{
+            background:rgba(255,255,255,.22);
+            border-radius:999px;
+        }
+
+        .minimal-scroll::-webkit-scrollbar-track{
+            background:transparent;
+        }
+
+        /* ADMIN PULT UCHUN 3D INPUT VA TUGMALAR (Yangilandi) */
         .input-3d {
             background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: inset 2px 2px 8px rgba(0, 0, 0, 0.8), inset -1px -1px 4px rgba(255, 255, 255, 0.02);
-            transition: border-color 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1.25rem;
+            box-shadow: inset 3px 3px 8px rgba(0, 0, 0, 0.8), inset -2px -2px 5px rgba(255, 255, 255, 0.03);
+            transition: all 0.3s ease;
         }
-        .input-3d:focus { border-color: rgba(255, 255, 255, 0.2); }
-        .btn-3d { background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(0,0,0,0.3)); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 2px 4px 10px rgba(0,0,0,0.4); transition: all 0.2s; }
-        .btn-3d:active { transform: translateY(2px) scale(0.98); }
-        .btn-3d-red { background: linear-gradient(145deg, rgba(239, 68, 68, 0.15), rgba(153, 27, 27, 0.4)); border: 1px solid rgba(239, 68, 68, 0.4); color: #f87171; transition: all 0.2s; }
-        .btn-3d-red:active { transform: translateY(2px) scale(0.98); }
+        .input-3d:focus { 
+            border-color: rgba(56, 189, 248, 0.5); 
+            box-shadow: inset 3px 3px 8px rgba(0, 0, 0, 0.8), 0 0 15px rgba(56, 189, 248, 0.2); 
+            background: rgba(0,0,0,0.6);
+        }
+        
+        .btn-3d { 
+            background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(0,0,0,0.4)); 
+            border: 1px solid rgba(255, 255, 255, 0.15); 
+            border-radius: 1.25rem;
+            box-shadow: 3px 5px 12px rgba(0,0,0,0.5), inset 1px 1px 3px rgba(255,255,255,0.2); 
+            transition: all 0.2s; 
+        }
+        .btn-3d:active { 
+            transform: translateY(3px) scale(0.98); 
+            box-shadow: inset 3px 3px 8px rgba(0,0,0,0.6); 
+        }
+        
+        .btn-3d-red { 
+            background: linear-gradient(145deg, rgba(239, 68, 68, 0.2), rgba(153, 27, 27, 0.5)); 
+            border: 1px solid rgba(239, 68, 68, 0.5); 
+            border-radius: 1.25rem;
+            color: #fca5a5; 
+            box-shadow: 3px 5px 12px rgba(0,0,0,0.5), inset 1px 1px 3px rgba(255,255,255,0.2); 
+            transition: all 0.2s; 
+        }
+        .btn-3d-red:active { 
+            transform: translateY(3px) scale(0.98); 
+            box-shadow: inset 3px 3px 8px rgba(0,0,0,0.8); 
+        }
     </style>
 </head>
 <body class="w-full h-screen flex relative text-zinc-100 bg-slate-950 overflow-hidden">
 
-    <div class="fixed inset-0 z-[-1]">
-        <img src="./rasmlar/fon.png" class="w-full h-full object-cover opacity-20 mix-blend-overlay" alt="Background">
+    <div class="fixed inset-0 z-[-1] bg-slate-950">
+        <img src="./rasmlar/fon.png" class="w-full h-full object-cover opacity-30 object-center" alt="Background">
     </div>
 
     <div id="admin-login-screen" class="absolute inset-0 z-50 flex items-center justify-center backdrop-blur-xl bg-black/80 animate__animated animate__fadeIn">
@@ -38,9 +219,9 @@
             <img src="./rasmlar/logo.png" alt="Logo" class="w-20 h-20 mx-auto mb-4 rounded-full bg-white shadow-lg">
             <h2 class="text-xl font-black mb-6 uppercase tracking-widest text-sky-400">Admin Pult</h2>
             
-            <input type="password" id="admin-pass-input" placeholder="MAXFIY PAROL..." class="input-3d w-full p-4 mb-6 rounded-2xl outline-none text-center tracking-[0.3em] font-black text-white placeholder-zinc-600 uppercase text-sm">
+            <input type="password" id="admin-pass-input" placeholder="MAXFIY PAROL..." class="input-3d w-full p-4 mb-6 outline-none text-center tracking-[0.3em] font-black text-white placeholder-zinc-600 uppercase text-sm">
             
-            <button onclick="checkAdminLogin()" class="btn-3d w-full py-4 rounded-2xl font-black uppercase tracking-widest text-sm text-white flex items-center justify-center gap-2">
+            <button onclick="checkAdminLogin()" class="btn-3d w-full py-4 font-black uppercase tracking-widest text-sm text-white flex items-center justify-center gap-2">
                 <i data-lucide="shield-check" class="w-5 h-5"></i> KIRISH
             </button>
         </div>
@@ -51,23 +232,23 @@
         <div class="w-full md:w-64 h-auto md:h-screen self-stretch flex flex-col justify-between glass-header-sidebar border-r border-white/5 z-20 shrink-0">
             <div class="h-16 lg:h-20 flex items-center justify-center gap-3 border-b border-white/5 px-4 shrink-0">
                 <i data-lucide="shield" class="w-6 h-6 text-sky-400"></i>
-                <span class="font-black tracking-widest text-white uppercase text-sm">Boshqaruv</span>
+                <span class="font-black tracking-widest text-white uppercase text-sm drop-shadow-md">Boshqaruv</span>
             </div>
             
             <div class="flex-1 flex flex-col pt-4 px-3 gap-2 overflow-y-auto minimal-scroll pb-6">
-                <button onclick="openAdminTab('tab-schedules', this)" class="menu-item active flex items-center p-3.5 rounded-xl font-bold text-xs uppercase tracking-widest text-white bg-white/10 transition-all">
+                <button onclick="openAdminTab('tab-schedules', this)" class="menu-item active flex items-center p-3.5 font-bold text-xs uppercase tracking-widest text-white transition-all">
                     <i data-lucide="calendar-days" class="w-4 h-4 mr-3 opacity-70"></i> DARS JADVALLARI
                 </button>
-                <button onclick="openAdminTab('tab-videos', this)" class="menu-item flex items-center p-3.5 rounded-xl font-bold text-xs uppercase tracking-widest text-zinc-400 hover:text-white transition-all hover:bg-white/5">
+                <button onclick="openAdminTab('tab-videos', this)" class="menu-item flex items-center p-3.5 font-bold text-xs uppercase tracking-widest text-zinc-400 hover:text-white transition-all">
                     <i data-lucide="play-circle" class="w-4 h-4 mr-3 opacity-70"></i> VIDEO DARSLAR
                 </button>
-                <button onclick="openAdminTab('tab-certs', this)" class="menu-item flex items-center p-3.5 rounded-xl font-bold text-xs uppercase tracking-widest text-zinc-400 hover:text-white transition-all hover:bg-white/5">
+                <button onclick="openAdminTab('tab-certs', this)" class="menu-item flex items-center p-3.5 font-bold text-xs uppercase tracking-widest text-zinc-400 hover:text-white transition-all">
                     <i data-lucide="award" class="w-4 h-4 mr-3 opacity-70"></i> SERTIFIKATLAR
                 </button>
             </div>
             
             <div class="px-3 pb-6 pt-4 border-t border-white/5 bg-black/20 shrink-0">
-                <button onclick="logoutAdmin()" class="btn-3d-red flex items-center justify-center gap-2 w-full p-3.5 rounded-xl font-bold text-xs uppercase tracking-widest">
+                <button onclick="logoutAdmin()" class="btn-3d-red flex items-center justify-center gap-2 w-full p-3.5 font-bold text-xs uppercase tracking-widest">
                     <i data-lucide="log-out" class="w-4 h-4"></i> Chiqish
                 </button>
             </div>
@@ -83,39 +264,39 @@
                         <h3 class="text-xs font-black text-white mb-4 uppercase tracking-widest flex items-center gap-2"><i data-lucide="plus-circle" class="w-4 h-4 text-emerald-400"></i> Yangi Jadval Qo'shish</h3>
                         
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                            <input type="text" id="sch-group" placeholder="Guruh nomi (Ingliz tili A1)" class="input-3d w-full p-4 rounded-xl text-white font-bold outline-none text-sm">
-                            <select id="sch-room" class="input-3d w-full p-4 rounded-xl text-white font-bold outline-none text-sm cursor-pointer bg-slate-900 appearance-none">
-                                <option value="">-- Xonani tanlang --</option>
-                                <option value="1">1-xona</option>
-                                <option value="2">2-xona</option>
-                                <option value="3">3-xona</option>
-                                <option value="4">4-xona</option>
-                                <option value="5">5-xona</option>
-                                <option value="6">6-xona</option>
-                                <option value="7A">7A-xona</option>
-                                <option value="8">8-xona</option>
-                                <option value="9A">9A-xona</option>
-                                <option value="9B">9B-xona</option>
-                                <option value="10A">10A-xona</option>
-                                <option value="10B">10B-xona</option>
+                            <input type="text" id="sch-group" placeholder="Guruh nomi (Ingliz tili A1)" class="input-3d w-full p-4 text-white font-bold outline-none text-sm">
+                            <select id="sch-room" class="input-3d w-full p-4 text-white font-bold outline-none text-sm cursor-pointer appearance-none">
+                                <option value="" style="background:#0f172a;">-- Xonani tanlang --</option>
+                                <option value="1" style="background:#0f172a;">1-xona</option>
+                                <option value="2" style="background:#0f172a;">2-xona</option>
+                                <option value="3" style="background:#0f172a;">3-xona</option>
+                                <option value="4" style="background:#0f172a;">4-xona</option>
+                                <option value="5" style="background:#0f172a;">5-xona</option>
+                                <option value="6" style="background:#0f172a;">6-xona</option>
+                                <option value="7A" style="background:#0f172a;">7A-xona</option>
+                                <option value="8" style="background:#0f172a;">8-xona</option>
+                                <option value="9A" style="background:#0f172a;">9A-xona</option>
+                                <option value="9B" style="background:#0f172a;">9B-xona</option>
+                                <option value="10A" style="background:#0f172a;">10A-xona</option>
+                                <option value="10B" style="background:#0f172a;">10B-xona</option>
                             </select>
                         </div>
                         
-                        <input type="text" id="sch-teacher" placeholder="O'qituvchi Ismi" class="input-3d w-full p-4 mb-4 rounded-xl text-white font-bold outline-none text-sm">
+                        <input type="text" id="sch-teacher" placeholder="O'qituvchi Ismi" class="input-3d w-full p-4 mb-4 text-white font-bold outline-none text-sm">
                         
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                            <input type="text" id="sch-phone" placeholder="Telefon (+998...)" class="input-3d w-full p-4 rounded-xl text-white font-bold outline-none text-sm">
-                            <input type="text" id="sch-photo" placeholder="Rasm havolasi (URL)" class="input-3d w-full p-4 rounded-xl text-white font-bold outline-none text-sm text-sky-400">
+                            <input type="text" id="sch-phone" placeholder="Telefon (+998...)" class="input-3d w-full p-4 text-white font-bold outline-none text-sm">
+                            <input type="text" id="sch-photo" placeholder="Rasm havolasi (URL)" class="input-3d w-full p-4 text-white font-bold outline-none text-sm text-sky-400">
                         </div>
 
-                        <textarea id="sch-level" rows="2" placeholder="O'qituvchi darajasi/Sertifikatlari..." class="input-3d w-full p-4 mb-4 rounded-xl text-white text-xs outline-none minimal-scroll resize-y text-emerald-400"></textarea>
+                        <textarea id="sch-level" rows="2" placeholder="O'qituvchi darajasi/Sertifikatlari..." class="input-3d w-full p-4 mb-4 text-white text-xs outline-none minimal-scroll resize-y text-emerald-400"></textarea>
 
                         <div class="grid grid-cols-2 gap-4 mb-6">
-                            <input type="text" id="sch-days" placeholder="Kunlar (Dush-Chor)" class="input-3d w-full p-4 rounded-xl text-white font-bold outline-none text-xs">
-                            <input type="text" id="sch-time" placeholder="Vaqt (14:00 - 16:00)" class="input-3d w-full p-4 rounded-xl text-white font-bold outline-none text-xs">
+                            <input type="text" id="sch-days" placeholder="Kunlar (Dush-Chor)" class="input-3d w-full p-4 text-white font-bold outline-none text-xs">
+                            <input type="text" id="sch-time" placeholder="Vaqt (14:00 - 16:00)" class="input-3d w-full p-4 text-white font-bold outline-none text-xs">
                         </div>
                         
-                        <button onclick="saveSchedule()" class="btn-3d w-full py-4 rounded-xl font-black uppercase tracking-widest text-sm text-emerald-400 flex justify-center items-center gap-2 border border-emerald-500/30">
+                        <button onclick="saveSchedule()" class="btn-3d w-full py-4 font-black uppercase tracking-widest text-sm text-emerald-400 flex justify-center items-center gap-2">
                             SAQLASH <i data-lucide="save" class="w-4 h-4"></i>
                         </button>
                     </div>
@@ -123,11 +304,11 @@
                     <div class="glass-card p-6 sm:p-8 h-fit">
                         <h3 class="text-xs font-black text-rose-400 mb-4 uppercase tracking-widest flex items-center gap-2"><i data-lucide="trash-2" class="w-4 h-4"></i> Jadvalni O'chirish</h3>
                         
-                        <select id="del-sch-select" class="input-3d w-full p-4 mb-6 rounded-xl text-white font-bold outline-none cursor-pointer appearance-none text-sm">
-                            <option value="">-- Jadvalni tanlang --</option>
+                        <select id="del-sch-select" class="input-3d w-full p-4 mb-6 text-white font-bold outline-none cursor-pointer appearance-none text-sm">
+                            <option value="" style="background:#0f172a;">-- Jadvalni tanlang --</option>
                         </select>
                         
-                        <button onclick="deleteSchedule()" class="btn-3d-red w-full py-4 rounded-xl font-black uppercase tracking-widest text-sm flex justify-center items-center gap-2">
+                        <button onclick="deleteSchedule()" class="btn-3d-red w-full py-4 font-black uppercase tracking-widest text-sm flex justify-center items-center gap-2">
                             O'chirish <i data-lucide="x-circle" class="w-4 h-4"></i>
                         </button>
                     </div>
@@ -141,12 +322,12 @@
                     <div class="glass-card p-6 sm:p-8">
                         <h3 class="text-xs font-black text-white mb-4 uppercase tracking-widest flex items-center gap-2"><i data-lucide="plus-circle" class="w-4 h-4 text-emerald-400"></i> Yangi Video Qo'shish</h3>
                         
-                        <input type="text" id="vid-fan" placeholder="Fan (Masalan: Ingliz tili)" class="input-3d w-full p-4 mb-4 rounded-xl text-white font-bold outline-none text-sm">
-                        <input type="text" id="vid-mavzu" placeholder="Mavzu nomi" class="input-3d w-full p-4 mb-4 rounded-xl text-white font-bold outline-none text-sm">
-                        <input type="text" id="vid-link" placeholder="YouTube Havola (https://youtu.be/...)" class="input-3d w-full p-4 mb-4 rounded-xl text-white font-bold outline-none text-sm text-sky-400">
-                        <input type="text" id="vid-muallif" placeholder="Muallif (O'qituvchi)" class="input-3d w-full p-4 mb-6 rounded-xl text-white font-bold outline-none text-xs">
+                        <input type="text" id="vid-fan" placeholder="Fan (Masalan: Ingliz tili)" class="input-3d w-full p-4 mb-4 text-white font-bold outline-none text-sm">
+                        <input type="text" id="vid-mavzu" placeholder="Mavzu nomi" class="input-3d w-full p-4 mb-4 text-white font-bold outline-none text-sm">
+                        <input type="text" id="vid-link" placeholder="YouTube Havola (https://youtu.be/...)" class="input-3d w-full p-4 mb-4 text-white font-bold outline-none text-sm text-sky-400">
+                        <input type="text" id="vid-muallif" placeholder="Muallif (O'qituvchi)" class="input-3d w-full p-4 mb-6 text-white font-bold outline-none text-xs">
                         
-                        <button onclick="saveVideo()" class="btn-3d w-full py-4 rounded-xl font-black uppercase tracking-widest text-sm text-emerald-400 flex justify-center items-center gap-2 border border-emerald-500/30">
+                        <button onclick="saveVideo()" class="btn-3d w-full py-4 font-black uppercase tracking-widest text-sm text-emerald-400 flex justify-center items-center gap-2">
                             SAQLASH <i data-lucide="upload" class="w-4 h-4"></i>
                         </button>
                     </div>
@@ -154,11 +335,11 @@
                     <div class="glass-card p-6 sm:p-8 h-fit">
                         <h3 class="text-xs font-black text-rose-400 mb-4 uppercase tracking-widest flex items-center gap-2"><i data-lucide="trash-2" class="w-4 h-4"></i> Videoni O'chirish</h3>
                         
-                        <select id="del-vid-select" class="input-3d w-full p-4 mb-6 rounded-xl text-white font-bold outline-none cursor-pointer appearance-none text-sm">
-                            <option value="">-- Videoni tanlang --</option>
+                        <select id="del-vid-select" class="input-3d w-full p-4 mb-6 text-white font-bold outline-none cursor-pointer appearance-none text-sm">
+                            <option value="" style="background:#0f172a;">-- Videoni tanlang --</option>
                         </select>
                         
-                        <button onclick="deleteVideo()" class="btn-3d-red w-full py-4 rounded-xl font-black uppercase tracking-widest text-sm flex justify-center items-center gap-2">
+                        <button onclick="deleteVideo()" class="btn-3d-red w-full py-4 font-black uppercase tracking-widest text-sm flex justify-center items-center gap-2">
                             O'chirish <i data-lucide="x-circle" class="w-4 h-4"></i>
                         </button>
                     </div>
@@ -172,12 +353,12 @@
                     <div class="glass-card p-6 sm:p-8">
                         <h3 class="text-xs font-black text-white mb-4 uppercase tracking-widest flex items-center gap-2"><i data-lucide="plus-circle" class="w-4 h-4 text-emerald-400"></i> Sertifikat Qo'shish</h3>
                         
-                        <input type="text" id="cert-name" placeholder="O'quvchining Ism-Familiyasi" class="input-3d w-full p-4 mb-4 rounded-xl text-white font-bold outline-none text-sm">
-                        <input type="text" id="cert-id" placeholder="Maxsus ID raqam (Masalan: ORZU-001)" class="input-3d w-full p-4 mb-4 rounded-xl text-white font-bold outline-none text-sm text-amber-400">
-                        <input type="text" id="cert-course" placeholder="Yo'nalish (Ingliz tili B2)" class="input-3d w-full p-4 mb-4 rounded-xl text-white font-bold outline-none text-xs">
-                        <textarea id="cert-img" rows="3" placeholder="Sertifikat rasmi havolasi (URL)..." class="input-3d w-full p-4 mb-6 rounded-xl text-white text-xs outline-none minimal-scroll resize-y text-sky-400"></textarea>
+                        <input type="text" id="cert-name" placeholder="O'quvchining Ism-Familiyasi" class="input-3d w-full p-4 mb-4 text-white font-bold outline-none text-sm">
+                        <input type="text" id="cert-id" placeholder="Maxsus ID raqam (Masalan: ORZU-001)" class="input-3d w-full p-4 mb-4 text-white font-bold outline-none text-sm text-amber-400">
+                        <input type="text" id="cert-course" placeholder="Yo'nalish (Ingliz tili B2)" class="input-3d w-full p-4 mb-4 text-white font-bold outline-none text-xs">
+                        <textarea id="cert-img" rows="3" placeholder="Sertifikat rasmi havolasi (URL)..." class="input-3d w-full p-4 mb-6 text-white text-xs outline-none minimal-scroll resize-y text-sky-400"></textarea>
                         
-                        <button onclick="saveCert()" class="btn-3d w-full py-4 rounded-xl font-black uppercase tracking-widest text-sm text-emerald-400 flex justify-center items-center gap-2 border border-emerald-500/30">
+                        <button onclick="saveCert()" class="btn-3d w-full py-4 font-black uppercase tracking-widest text-sm text-emerald-400 flex justify-center items-center gap-2">
                             SAQLASH <i data-lucide="save" class="w-4 h-4"></i>
                         </button>
                     </div>
@@ -185,11 +366,11 @@
                     <div class="glass-card p-6 sm:p-8 h-fit">
                         <h3 class="text-xs font-black text-rose-400 mb-4 uppercase tracking-widest flex items-center gap-2"><i data-lucide="trash-2" class="w-4 h-4"></i> Sertifikatni O'chirish</h3>
                         
-                        <select id="del-cert-select" class="input-3d w-full p-4 mb-6 rounded-xl text-white font-bold outline-none cursor-pointer appearance-none text-sm">
-                            <option value="">-- Sertifikatni tanlang --</option>
+                        <select id="del-cert-select" class="input-3d w-full p-4 mb-6 text-white font-bold outline-none cursor-pointer appearance-none text-sm">
+                            <option value="" style="background:#0f172a;">-- Sertifikatni tanlang --</option>
                         </select>
                         
-                        <button onclick="deleteCert()" class="btn-3d-red w-full py-4 rounded-xl font-black uppercase tracking-widest text-sm flex justify-center items-center gap-2">
+                        <button onclick="deleteCert()" class="btn-3d-red w-full py-4 font-black uppercase tracking-widest text-sm flex justify-center items-center gap-2">
                             O'chirish <i data-lucide="x-circle" class="w-4 h-4"></i>
                         </button>
                     </div>
@@ -199,6 +380,7 @@
         </div>
     </div>
     
+    <script src="js/core/db-config.js"></script>
     <script src="admin.js"></script>
 </body>
 </html>
