@@ -41,35 +41,22 @@
             overscroll-behavior:none;
         }
 
-        /* Orqa fondagi suzuvchi suyuqlik effektlari */
-        body::before,
-        body::after{
-            content:"";
-            position:fixed;
-            width:42vmax;
-            height:42vmax;
-            border-radius:999px;
-            pointer-events:none;
-            z-index:0;
-            filter:blur(58px);
-            opacity:.22;
-            transform:translate3d(0,0,0);
-            will-change:transform;
+        body::before, body::after{
+            content:""; position:fixed; width:42vmax; height:42vmax; border-radius:999px;
+            pointer-events:none; z-index:0; filter:blur(58px); opacity:.22;
+            transform:translate3d(0,0,0); will-change:transform;
             animation:orzuLiquidFloat 18s ease-in-out infinite alternate;
         }
 
         body::before{
-            left:-15vmax;
-            top:-14vmax;
+            left:-15vmax; top:-14vmax;
             background:linear-gradient(135deg,rgba(14,165,233,.72),rgba(99,102,241,.25));
         }
 
         body::after{
-            right:-18vmax;
-            bottom:-18vmax;
+            right:-18vmax; bottom:-18vmax;
             background:linear-gradient(135deg,rgba(16,185,129,.55),rgba(244,63,94,.24));
-            animation-duration:22s;
-            animation-delay:-5s;
+            animation-duration:22s; animation-delay:-5s;
         }
 
         @keyframes orzuLiquidFloat{
@@ -79,133 +66,61 @@
         }
 
         .glass-header-sidebar {
-            position:relative;
-            isolation:isolate;
+            position:relative; isolation:isolate;
             background: linear-gradient(145deg, rgba(15,23,42,0.6), rgba(2,6,23,0.4));
             backdrop-filter: blur(24px) saturate(155%);
             -webkit-backdrop-filter: blur(24px) saturate(155%);
         }
 
-        /* Yumshoq 3D Shaffof Kartalar (Glassmorphism + Neumorphism) */
         .glass-card {
-            position:relative;
-            isolation:isolate;
-            border-radius: 2rem;
+            position:relative; isolation:isolate; border-radius: 2rem;
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
             border: 1px solid rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(24px) saturate(160%);
-            -webkit-backdrop-filter: blur(24px) saturate(160%);
-            box-shadow: 
-                inset 2px 2px 4px rgba(255, 255, 255, 0.12),
-                inset -3px -3px 6px rgba(0, 0, 0, 0.4),
-                0 15px 35px rgba(0, 0, 0, 0.45),
-                0 5px 15px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            transform: translateZ(0);
+            backdrop-filter: blur(24px) saturate(160%); -webkit-backdrop-filter: blur(24px) saturate(160%);
+            box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.12), inset -3px -3px 6px rgba(0, 0, 0, 0.4), 0 15px 35px rgba(0, 0, 0, 0.45), 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); transform: translateZ(0);
         }
 
         .glass-card:hover {
             transform: translateY(-4px) perspective(1000px) rotateX(1deg) rotateY(-0.5deg) scale(1.01);
             border-color: rgba(255, 255, 255, 0.15);
-            box-shadow: 
-                inset 2px 2px 5px rgba(255, 255, 255, 0.2),
-                inset -3px -3px 8px rgba(0, 0, 0, 0.5),
-                0 25px 50px rgba(0, 0, 0, 0.55),
-                0 10px 25px rgba(56, 189, 248, 0.15);
+            box-shadow: inset 2px 2px 5px rgba(255, 255, 255, 0.2), inset -3px -3px 8px rgba(0, 0, 0, 0.5), 0 25px 50px rgba(0, 0, 0, 0.55), 0 10px 25px rgba(56, 189, 248, 0.15);
         }
 
         .menu-item {
-            position:relative;
-            overflow:hidden;
-            outline:none;
-            border-radius: 1.25rem;
-            transform:translateZ(0);
-            transition: all 0.3s ease;
+            position:relative; overflow:hidden; outline:none; border-radius: 1.25rem; transform:translateZ(0); transition: all 0.3s ease;
         }
 
         .menu-item::before {
-            content:"";
-            position:absolute;
-            inset:0;
-            border-radius:inherit;
+            content:""; position:absolute; inset:0; border-radius:inherit;
             background:linear-gradient(120deg,rgba(255,255,255,.18),transparent 45%,rgba(56,189,248,.12));
-            opacity:0;
-            transition:opacity .25s ease;
-            pointer-events:none;
+            opacity:0; transition:opacity .25s ease; pointer-events:none;
         }
 
-        .menu-item:hover::before,
-        .menu-item.active::before {
-            opacity:1;
-        }
+        .menu-item:hover::before, .menu-item.active::before { opacity:1; }
 
         .menu-item.active {
             color:#fff !important;
             background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(255, 255, 255, 0.05)) !important;
             border: 1px solid rgba(125, 211, 252, 0.2);
-            box-shadow: 
-                inset 1px 1px 3px rgba(255, 255, 255, 0.15),
-                inset -1px -1px 4px rgba(0, 0, 0, 0.2),
-                0 10px 25px rgba(56, 189, 248, 0.15);
+            box-shadow: inset 1px 1px 3px rgba(255, 255, 255, 0.15), inset -1px -1px 4px rgba(0, 0, 0, 0.2), 0 10px 25px rgba(56, 189, 248, 0.15);
         }
 
-        .minimal-scroll{
-            scrollbar-width:thin;
-            scrollbar-color:rgba(255,255,255,.22) transparent;
-        }
+        .minimal-scroll{ scrollbar-width:thin; scrollbar-color:rgba(255,255,255,.22) transparent; }
+        .minimal-scroll::-webkit-scrollbar{ width:6px; height:6px; }
+        .minimal-scroll::-webkit-scrollbar-thumb{ background:rgba(255,255,255,.22); border-radius:999px; }
 
-        .minimal-scroll::-webkit-scrollbar{
-            width:6px;
-            height:6px;
-        }
-
-        .minimal-scroll::-webkit-scrollbar-thumb{
-            background:rgba(255,255,255,.22);
-            border-radius:999px;
-        }
-
-        .minimal-scroll::-webkit-scrollbar-track{
-            background:transparent;
-        }
-
-        /* ADMIN PULT UCHUN 3D INPUT VA TUGMALAR (Yangilandi) */
         .input-3d {
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 1.25rem;
-            box-shadow: inset 3px 3px 8px rgba(0, 0, 0, 0.8), inset -2px -2px 5px rgba(255, 255, 255, 0.03);
-            transition: all 0.3s ease;
+            background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 1.25rem;
+            box-shadow: inset 3px 3px 8px rgba(0, 0, 0, 0.8), inset -2px -2px 5px rgba(255, 255, 255, 0.03); transition: all 0.3s ease;
         }
-        .input-3d:focus { 
-            border-color: rgba(56, 189, 248, 0.5); 
-            box-shadow: inset 3px 3px 8px rgba(0, 0, 0, 0.8), 0 0 15px rgba(56, 189, 248, 0.2); 
-            background: rgba(0,0,0,0.6);
-        }
+        .input-3d:focus { border-color: rgba(56, 189, 248, 0.5); box-shadow: inset 3px 3px 8px rgba(0, 0, 0, 0.8), 0 0 15px rgba(56, 189, 248, 0.2); background: rgba(0,0,0,0.6); }
         
-        .btn-3d { 
-            background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(0,0,0,0.4)); 
-            border: 1px solid rgba(255, 255, 255, 0.15); 
-            border-radius: 1.25rem;
-            box-shadow: 3px 5px 12px rgba(0,0,0,0.5), inset 1px 1px 3px rgba(255,255,255,0.2); 
-            transition: all 0.2s; 
-        }
-        .btn-3d:active { 
-            transform: translateY(3px) scale(0.98); 
-            box-shadow: inset 3px 3px 8px rgba(0,0,0,0.6); 
-        }
+        .btn-3d { background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(0,0,0,0.4)); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 1.25rem; box-shadow: 3px 5px 12px rgba(0,0,0,0.5), inset 1px 1px 3px rgba(255,255,255,0.2); transition: all 0.2s; }
+        .btn-3d:active { transform: translateY(3px) scale(0.98); box-shadow: inset 3px 3px 8px rgba(0,0,0,0.6); }
         
-        .btn-3d-red { 
-            background: linear-gradient(145deg, rgba(239, 68, 68, 0.2), rgba(153, 27, 27, 0.5)); 
-            border: 1px solid rgba(239, 68, 68, 0.5); 
-            border-radius: 1.25rem;
-            color: #fca5a5; 
-            box-shadow: 3px 5px 12px rgba(0,0,0,0.5), inset 1px 1px 3px rgba(255,255,255,0.2); 
-            transition: all 0.2s; 
-        }
-        .btn-3d-red:active { 
-            transform: translateY(3px) scale(0.98); 
-            box-shadow: inset 3px 3px 8px rgba(0,0,0,0.8); 
-        }
+        .btn-3d-red { background: linear-gradient(145deg, rgba(239, 68, 68, 0.2), rgba(153, 27, 27, 0.5)); border: 1px solid rgba(239, 68, 68, 0.5); border-radius: 1.25rem; color: #fca5a5; box-shadow: 3px 5px 12px rgba(0,0,0,0.5), inset 1px 1px 3px rgba(255,255,255,0.2); transition: all 0.2s; }
+        .btn-3d-red:active { transform: translateY(3px) scale(0.98); box-shadow: inset 3px 3px 8px rgba(0,0,0,0.8); }
     </style>
 </head>
 <body class="w-full h-screen flex relative text-zinc-100 bg-slate-950 overflow-hidden">
@@ -219,8 +134,10 @@
             <img src="./rasmlar/logo.png" alt="Logo" class="w-20 h-20 mx-auto mb-4 rounded-full bg-white shadow-lg">
             <h2 class="text-xl font-black mb-6 uppercase tracking-widest text-sky-400">Admin Pult</h2>
             
-            <button onclick="loginWithGoogle()" class="btn-3d w-full py-4 font-black uppercase tracking-widest text-sm text-white flex items-center justify-center gap-3">
-                <i class="fa-brands fa-google text-lg text-rose-400"></i> GOOGLE ORQALI KIRISH
+            <input type="password" id="admin-pass-input" placeholder="MAXFIY PAROL..." class="input-3d w-full p-4 mb-6 outline-none text-center tracking-[0.3em] font-black text-white placeholder-zinc-600 uppercase text-sm">
+            
+            <button onclick="checkAdminLogin()" class="btn-3d w-full py-4 font-black uppercase tracking-widest text-sm text-white flex items-center justify-center gap-2">
+                <i data-lucide="shield-check" class="w-5 h-5"></i> KIRISH
             </button>
         </div>
     </div>
@@ -379,56 +296,6 @@
     </div>
     
     <script src="js/core/db-config.js"></script>
-    
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyBjaBAdctGDEUJl_nQcGvartrCyxUFvphQ",
-            authDomain: "orzu-education.firebaseapp.com",
-            databaseURL: "https://orzu-education-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "orzu-education",
-            storageBucket: "orzu-education.firebasestorage.app",
-            messagingSenderId: "425717261737",
-            appId: "1:425717261737:web:bb063c5773c724284bd0b8",
-            measurementId: "G-5162FR9PSN"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
-
-        window.loginWithGoogle = function() {
-            Swal.fire({
-                background: 'rgba(15, 23, 42, 0.95)', color: '#f8fafc',
-                title: 'Kutilmoqda...', text: 'Google tekshiruvi...',
-                didOpen: () => Swal.showLoading()
-            });
-            
-            signInWithPopup(auth, provider).then((result) => {
-                return result.user.getIdToken();
-            }).then((idToken) => {
-                fetch(window.API_URL + '/login/google', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ token: idToken })
-                }).then(res => res.json()).then(data => {
-                    if(data.status === 'ok') {
-                        sessionStorage.setItem('ORZU_Admin_Token', data.token);
-                        Swal.close();
-                        if(typeof showDashboard === 'function') showDashboard(); 
-                        else window.location.reload();
-                    } else {
-                        Swal.fire({ icon: 'error', title: 'Xato', text: data.detail });
-                    }
-                }).catch(err => Swal.fire({ icon: 'error', title: 'Xatolik', text: 'Server bilan aloqa yo\'q!' }));
-            }).catch((error) => {
-                Swal.fire({ icon: 'error', title: 'Bekor qilindi', text: 'Google orqali kirilmadi!' });
-            });
-        }
-    </script>
-    
     <script src="admin.js"></script>
 </body>
 </html>
