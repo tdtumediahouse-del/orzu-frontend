@@ -1,4 +1,5 @@
-const API_URL = "http://127.0.0.1:8000/api";
+// Manzilni qotirib yozmasdan, global konfiguratsiyadan olamiz (Vercel)
+const API_URL = window.API_URL || "https://orzu-backend.vercel.app";
 
 const swalConfig = {
     background: 'rgba(15, 23, 42, 0.95)',
