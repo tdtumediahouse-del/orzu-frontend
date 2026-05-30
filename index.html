@@ -116,9 +116,7 @@
             <i data-lucide="shield-plus" class="w-16 h-16 mx-auto mb-4 text-emerald-400"></i>
             <h2 class="text-xl font-black mb-2 uppercase tracking-widest text-white">Xavfsizlik</h2>
             <p class="text-xs text-zinc-400 font-bold mb-6">Kelgusi kirishlar uchun 4 ta raqamli ixtiyoriy PIN-kod o'rnating.</p>
-            
             <input type="password" id="new-pin-input" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="••••" class="pin-input w-full py-4 mb-6">
-            
             <button onclick="saveNewPin()" class="btn-bot w-full py-4 bg-gradient-to-r from-emerald-500/20 to-emerald-600/60 border-emerald-500/50 shadow-[0_10px_25px_rgba(16,185,129,0.3)]">
                 O'RNATISH <i data-lucide="arrow-right" class="inline w-4 h-4 ml-1"></i>
             </button>
@@ -132,9 +130,7 @@
             </div>
             <h2 class="text-lg font-black mb-1 uppercase tracking-widest text-white" id="verify-user-name">Xush Kelibsiz</h2>
             <p class="text-xs text-zinc-400 font-bold mb-6">Tizimga kirish uchun PIN-kodingizni kiriting.</p>
-            
             <input type="password" id="verify-pin-input" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="••••" class="pin-input w-full py-4 mb-6">
-            
             <button onclick="verifyExistingPin()" class="btn-bot w-full py-4">
                 KIRISH <i data-lucide="unlock" class="inline w-4 h-4 ml-1"></i>
             </button>
@@ -144,7 +140,6 @@
         </div>
     </div>
 
-
     <div class="fixed inset-0 z-[-2] bg-slate-950">
         <img src="./rasmlar/fon.png" class="w-full h-full object-cover opacity-30 object-center">
     </div>
@@ -152,34 +147,24 @@
     <div class="absolute inset-0 flex flex-col md:flex-row z-10 overflow-hidden" id="main-app-container">
 
         <div class="w-full md:w-64 shrink-0 flex flex-col justify-between glass-header-sidebar border-t md:border-t-0 md:border-r border-white/10 order-last md:order-first z-50 shadow-[0_-10px_30px_rgba(0,0,0,0.5)] md:shadow-none pt-2 md:pt-0" style="padding-bottom: max(env(safe-area-inset-bottom), 16px);">
-            
             <div class="hidden md:flex h-20 items-center justify-center gap-3 border-b border-white/10 px-4 shrink-0">
                 <img src="./rasmlar/logo.png" class="h-10 w-10 rounded-full object-cover bg-white shadow-[0_0_15px_rgba(56,189,248,0.2)]">
                 <span class="font-black tracking-widest uppercase text-sm drop-shadow-md">Orzu Education</span>
             </div>
             
             <div class="flex-1 grid grid-cols-4 md:flex md:flex-col w-full px-1 md:px-4 py-1 md:py-6 gap-1.5 md:gap-2 items-center md:items-stretch overflow-hidden md:overflow-y-auto minimal-scroll">
-                
                 <button onclick="app.openTab('tab-dashboard', this)" class="menu-item active bg-white/10 flex flex-col md:flex-row items-center justify-center md:justify-start w-full py-2.5 md:p-3.5 rounded-xl font-bold uppercase tracking-widest transition-all text-white">
-                    <i data-lucide="layout-dashboard" class="w-5 h-5 md:w-4 md:h-4 mb-1 md:mb-0 md:mr-3 opacity-80"></i> 
-                    <span class="text-[9px] md:text-xs text-center leading-tight">Asosiy</span>
+                    <i data-lucide="layout-dashboard" class="w-5 h-5 md:w-4 md:h-4 mb-1 md:mb-0 md:mr-3 opacity-80"></i> <span class="text-[9px] md:text-xs text-center leading-tight">Asosiy</span>
                 </button>
-                
                 <button onclick="app.openTab('tab-schedules', this)" class="menu-item flex flex-col md:flex-row items-center justify-center md:justify-start w-full py-2.5 md:p-3.5 rounded-xl font-bold uppercase tracking-widest hover:bg-white/5 transition-all text-zinc-400 hover:text-white">
-                    <i data-lucide="calendar-days" class="w-5 h-5 md:w-4 md:h-4 mb-1 md:mb-0 md:mr-3 opacity-80"></i> 
-                    <span class="text-[9px] md:text-xs text-center leading-tight">Jadvallar</span>
+                    <i data-lucide="calendar-days" class="w-5 h-5 md:w-4 md:h-4 mb-1 md:mb-0 md:mr-3 opacity-80"></i> <span class="text-[9px] md:text-xs text-center leading-tight">Jadvallar</span>
                 </button>
-                
                 <button onclick="app.openTab('tab-videolessons', this)" class="menu-item flex flex-col md:flex-row items-center justify-center md:justify-start w-full py-2.5 md:p-3.5 rounded-xl font-bold uppercase tracking-widest hover:bg-white/5 transition-all text-zinc-400 hover:text-white">
-                    <i data-lucide="play-circle" class="w-5 h-5 md:w-4 md:h-4 mb-1 md:mb-0 md:mr-3 opacity-80"></i> 
-                    <span class="text-[9px] md:text-xs text-center leading-tight">Videolar</span>
+                    <i data-lucide="play-circle" class="w-5 h-5 md:w-4 md:h-4 mb-1 md:mb-0 md:mr-3 opacity-80"></i> <span class="text-[9px] md:text-xs text-center leading-tight">Videolar</span>
                 </button>
-                
                 <button onclick="app.openTab('tab-certificates', this)" class="menu-item flex flex-col md:flex-row items-center justify-center md:justify-start w-full py-2.5 md:p-3.5 rounded-xl font-bold uppercase tracking-widest hover:bg-white/5 transition-all text-zinc-400 hover:text-white">
-                    <i data-lucide="award" class="w-5 h-5 md:w-4 md:h-4 mb-1 md:mb-0 md:mr-3 opacity-80"></i> 
-                    <span class="text-[9px] md:text-xs text-center leading-tight">Sertifikat</span>
+                    <i data-lucide="award" class="w-5 h-5 md:w-4 md:h-4 mb-1 md:mb-0 md:mr-3 opacity-80"></i> <span class="text-[9px] md:text-xs text-center leading-tight">Sertifikat</span>
                 </button>
-
             </div>
 
             <div class="px-4 pb-6 pt-4 hidden md:block shrink-0 border-t border-white/10">
@@ -202,7 +187,13 @@
                         <input type="text" id="global-search" placeholder="Platformadan qidirish..." class="bg-black/40 border border-white/10 w-full py-2.5 pl-12 pr-4 text-sm outline-none transition-all text-white">
                     </div>
                 </div>
+                
                 <div class="flex items-center gap-3">
+                    <button id="music-toggle-btn" class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-sky-500/20 text-sky-400 flex items-center justify-center border border-sky-500/30 transition-all hover:scale-105 shadow-[0_0_15px_rgba(56,189,248,0.2)] relative overflow-hidden group">
+                        <div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out"></div>
+                        <i data-lucide="volume-x" id="music-icon" class="w-4 h-4 md:w-5 md:h-5 relative z-10 transition-colors"></i>
+                    </button>
+
                     <div class="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full border border-white/10 bg-black/20">
                         <img src="./rasmlar/logo.png" class="h-6 w-6 md:h-7 md:w-7 rounded-full object-cover bg-white">
                         <span class="text-[10px] md:text-xs font-bold uppercase tracking-widest text-white" id="ui-username">O'quvchi</span>
@@ -214,7 +205,6 @@
             </div>
             
             <div class="flex-1 overflow-y-auto minimal-scroll p-4 md:p-8 lg:px-12 relative z-0">
-                
                 <div id="tab-dashboard" class="tab-content animate__animated animate__fadeIn pb-12 md:pb-10">
                     <h2 class="text-lg md:text-xl font-black uppercase tracking-widest mb-4 md:mb-6 pb-3 border-b border-white/10 flex items-center gap-2 text-sky-400">
                         <i data-lucide="building-2" class="w-5 h-5 md:w-6 md:h-6"></i> Markaz Haqida
@@ -317,7 +307,6 @@
                         <p class="text-xs md:text-sm font-bold uppercase tracking-widest opacity-50 text-center">Sertifikat moduli yuklanmoqda...</p>
                     </div>
                 </div>
-                
             </div>
         </div>
     </div>
@@ -329,13 +318,53 @@
     <script src="js/features/certificates.js"></script>
 
     <script>
-        // O'ZINGIZNING BOT USERNAME'INI SHU YERGA YOZING
-        const TELEGRAM_BOT_URL = "https://t.me/Orzueduuzbot";
-        const INACTIVITY_LIMIT = 30 * 60 * 1000; // 30 daqiqa harakatsiz qolsa qulflanadi
+        const TELEGRAM_BOT_URL = "https://t.me/Ozingizning_bot_username_ni_yozing"; 
+        const INACTIVITY_LIMIT = 30 * 60 * 1000; 
 
-        function openTelegramBot() {
-            window.open(TELEGRAM_BOT_URL, '_blank');
+        // ================= Musiqa Mantiq =================
+        const bgMusic = new Audio('./Measured_Progress.mp3');
+        bgMusic.loop = true;
+        bgMusic.volume = 0.4;
+        let isMusicPlaying = false;
+        let userMuted = false;
+
+        function toggleMusic() {
+            const btn = document.getElementById('music-toggle-btn');
+            const icon = document.getElementById('music-icon');
+            
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                isMusicPlaying = false;
+                userMuted = true;
+                icon.setAttribute('data-lucide', 'volume-x');
+                icon.classList.remove('animate-pulse', 'text-emerald-400');
+                btn.classList.remove('shadow-[0_0_20px_rgba(16,185,129,0.4)]', 'border-emerald-500/50', 'bg-emerald-500/20');
+                btn.classList.add('shadow-[0_0_15px_rgba(56,189,248,0.2)]', 'border-sky-500/30', 'bg-sky-500/20', 'text-sky-400');
+            } else {
+                bgMusic.play().catch(e => console.log('Autoplay blocked:', e));
+                isMusicPlaying = true;
+                userMuted = false;
+                icon.setAttribute('data-lucide', 'volume-2');
+                icon.classList.add('animate-pulse', 'text-emerald-400');
+                btn.classList.remove('shadow-[0_0_15px_rgba(56,189,248,0.2)]', 'border-sky-500/30', 'bg-sky-500/20', 'text-sky-400');
+                btn.classList.add('shadow-[0_0_20px_rgba(16,185,129,0.4)]', 'border-emerald-500/50', 'bg-emerald-500/20');
+            }
+            if(window.lucide) window.lucide.createIcons();
         }
+
+        document.getElementById('music-toggle-btn').addEventListener('click', toggleMusic);
+
+        // Mutlaq Notification Bar tozalash (Background/Tab yopilganda o'chadi)
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                if (isMusicPlaying) bgMusic.pause();
+            } else {
+                if (isMusicPlaying && !userMuted) bgMusic.play().catch(e => {});
+            }
+        });
+
+        // ================= Qulf Mantiq =================
+        function openTelegramBot() { window.open(TELEGRAM_BOT_URL, '_blank'); }
 
         function hideAllAuthScreens() {
             document.getElementById('auth-lock-screen').classList.add('hidden');
@@ -347,28 +376,24 @@
             hideAllAuthScreens();
             localStorage.setItem('ORZU_Last_Active', new Date().getTime());
             
-            // Xavfsizlik maqsadida har marta bosilganda vaqtni yangilab turamiz
-            document.addEventListener('click', () => {
-                localStorage.setItem('ORZU_Last_Active', new Date().getTime());
-            }, {passive: true});
-            document.addEventListener('touchstart', () => {
-                localStorage.setItem('ORZU_Last_Active', new Date().getTime());
-            }, {passive: true});
+            // Tizimga muvaffaqiyatli kirgach musiqani avtomatik yoqishga harakat qilamiz
+            if (!isMusicPlaying && !userMuted) {
+                toggleMusic();
+            }
+            
+            document.addEventListener('click', () => localStorage.setItem('ORZU_Last_Active', new Date().getTime()), {passive: true});
+            document.addEventListener('touchstart', () => localStorage.setItem('ORZU_Last_Active', new Date().getTime()), {passive: true});
         }
 
         function saveNewPin() {
             const pin = document.getElementById('new-pin-input').value;
-            if(pin.length !== 4) {
-                return Swal.fire({title: 'Xato', text: 'PIN-kod 4 ta raqamdan iborat bo\'lishi kerak!', icon: 'warning', background: '#0f172a', color: '#fff'});
-            }
-            localStorage.setItem('ORZU_User_PIN', pin);
+            if(pin.length !== 4) return Swal.fire({title: 'Xato', text: 'PIN-kod 4 ta raqamdan iborat bo\'lishi kerak!', icon: 'warning', background: '#0f172a', color: '#fff'});
             
+            localStorage.setItem('ORZU_User_PIN', pin);
             Swal.fire({
                 title: 'Ajoyib!', text: 'PIN-kod saqlandi. Xush kelibsiz!', icon: 'success', 
                 timer: 1500, showConfirmButton: false, background: '#0f172a', color: '#fff'
-            }).then(() => {
-                grantAccess();
-            });
+            }).then(() => { grantAccess(); });
         }
 
         function verifyExistingPin() {
@@ -377,7 +402,7 @@
             
             if(enteredPin === savedPin) {
                 grantAccess();
-                document.getElementById('verify-pin-input').value = ''; // tozalab qo'yamiz
+                document.getElementById('verify-pin-input').value = ''; 
             } else {
                 Swal.fire({title: 'Xato', text: 'PIN-kod noto\'g\'ri!', icon: 'error', background: '#0f172a', color: '#fff'});
                 document.getElementById('verify-pin-input').value = '';
@@ -399,7 +424,6 @@
             });
         }
 
-        // Dastur ishga tushganda Xavfsizlikni tekshirish
         function checkAuthStatus() {
             const urlParams = new URLSearchParams(window.location.search);
             const urlToken = urlParams.get('token');
@@ -409,44 +433,29 @@
 
             hideAllAuthScreens();
 
-            // 1. Yangi havola orqali kelyaptimi?
             if (urlToken) {
                 localStorage.setItem('ORZU_User_Token', urlToken);
-                // URL dan tokenni o'chirib tashlaymiz (Chiroyli ko'rinishi va birov nusxalab olmasligi uchun)
                 window.history.replaceState({}, document.title, window.location.pathname);
-                
-                // Endi 4 xonali parol qo'yishini so'raymiz
                 document.getElementById('pin-setup-screen').classList.remove('hidden');
             } 
-            // 2. Umuman ro'yxatdan o'tmaganmi? (Token yo'q)
             else if (!savedToken) {
                 document.getElementById('auth-lock-screen').classList.remove('hidden');
             } 
-            // 3. Token bor, lekin PIN qo'ymay chiqib ketgan bo'lsa
             else if (savedToken && !savedPin) {
                 document.getElementById('pin-setup-screen').classList.remove('hidden');
             } 
-            // 4. Token va PIN bor. Faollik vaqtini tekshiramiz.
             else {
                 const now = new Date().getTime();
                 if (lastActive && (now - parseInt(lastActive)) > INACTIVITY_LIMIT) {
-                    // Uzoq vaqt kirmagan, qulfni ko'rsatamiz
                     document.getElementById('pin-verify-screen').classList.remove('hidden');
                 } else {
-                    // Yaqinda kirgan ekan, to'g'ridan-to'g'ri o'tkazamiz
-                    grantAccess();
+                    grantAccess(); // O'z vaqtida qaytib kelgan foydalanuvchini musiqa bilan qarshi olamiz
                 }
             }
         }
 
-        // Logout funksiyasini qayta yozamiz (Magic Link mantiqiga moslab)
-        if(window.app) {
-            window.app.logout = function() {
-                resetAccountLocally();
-            }
-        }
+        if(window.app) window.app.logout = function() { resetAccountLocally(); }
 
-        // Barcha UI yuklangach, tekshiruvni boshlaymiz
         window.addEventListener('DOMContentLoaded', () => {
             if(window.lucide) window.lucide.createIcons();
             checkAuthStatus();
