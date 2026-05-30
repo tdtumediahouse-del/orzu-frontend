@@ -34,8 +34,10 @@
             -webkit-tap-highlight-color:transparent;
         }
 
+        /* DIQQAT: h-[100dvh] ishlatiladi */
         html,body{
             min-height:100%;
+            height: 100dvh; 
             background:
                 radial-gradient(circle at 14% 12%, rgba(56,189,248,.18), transparent 30%),
                 radial-gradient(circle at 84% 18%, rgba(244,63,94,.13), transparent 28%),
@@ -413,41 +415,41 @@
 
 </head>
 
-<body class="text-slate-50 w-full h-screen overflow-hidden flex relative">
+<body class="bg-slate-950 text-slate-50 w-full h-[100dvh] overflow-hidden flex relative">
 
     <div class="fixed inset-0 z-[-1] bg-slate-950">
-        <img src="./rasmlar/fon.png" class="w-full h-full object-cover opacity-30 object-center">
+        <img src="./rasmlar/fon.png" class="w-full h-full object-cover opacity-30 object-center mix-blend-overlay">
     </div>
     
-    <div class="w-full h-screen flex flex-col md:flex-row z-10 overflow-hidden">
+    <div class="w-full h-[100dvh] flex flex-col md:flex-row z-10 overflow-hidden">
 
-        <div class="w-full md:w-64 h-auto md:h-screen self-stretch shrink-0 flex flex-col justify-between glass-header-sidebar border-t md:border-t-0 md:border-r border-white/10 order-last md:order-first z-50 shadow-[0_-10px_30px_rgba(0,0,0,0.5)] md:shadow-none" style="padding-bottom: calc(env(safe-area-inset-bottom) + 16px);">
+        <div class="w-full md:w-64 shrink-0 flex flex-col justify-between glass-header-sidebar border-t md:border-t-0 md:border-r border-white/10 order-last md:order-first z-50 shadow-[0_-10px_30px_rgba(0,0,0,0.5)] md:shadow-none pb-6 pt-2 md:pb-0 md:pt-0">
             
             <div class="hidden md:flex h-20 items-center justify-center gap-3 border-b border-white/10 px-4 shrink-0">
                 <img src="./rasmlar/logo.png" class="h-10 w-10 rounded-full object-cover bg-white shadow-[0_0_15px_rgba(56,189,248,0.2)]">
                 <span class="font-black tracking-widest uppercase text-sm drop-shadow-md">Orzu Education</span>
             </div>
             
-            <div class="flex-1 grid grid-cols-4 md:flex md:flex-col w-full px-2 md:px-4 py-2 md:py-6 gap-1.5 md:gap-2 items-center md:items-stretch">
+            <div class="flex-1 grid grid-cols-4 md:flex md:flex-col w-full px-1 md:px-4 py-1 md:py-6 gap-1 md:gap-2 items-center md:items-stretch overflow-hidden md:overflow-y-auto minimal-scroll">
                 
-                <button onclick="app.openTab('tab-dashboard', this)" class="menu-item active bg-white/10 flex flex-col md:flex-row items-center justify-center md:justify-start py-2.5 px-1 md:p-3.5 rounded-xl font-bold uppercase tracking-widest transition-all w-full text-white">
+                <button onclick="app.openTab('tab-dashboard', this)" class="menu-item active bg-white/10 flex flex-col md:flex-row items-center justify-center md:justify-start w-full py-2.5 md:p-3.5 rounded-xl font-bold uppercase tracking-widest transition-all text-white">
                     <i data-lucide="layout-dashboard" class="w-5 h-5 md:w-4 md:h-4 mb-1 md:mb-0 md:mr-3 opacity-80"></i> 
-                    <span class="text-[8px] md:text-xs text-center leading-tight">Asosiy</span>
+                    <span class="text-[9px] md:text-xs text-center leading-tight">Asosiy</span>
                 </button>
                 
-                <button onclick="app.openTab('tab-schedules', this)" class="menu-item flex flex-col md:flex-row items-center justify-center md:justify-start py-2.5 px-1 md:p-3.5 rounded-xl font-bold uppercase tracking-widest hover:bg-white/5 transition-all w-full text-zinc-400 hover:text-white">
+                <button onclick="app.openTab('tab-schedules', this)" class="menu-item flex flex-col md:flex-row items-center justify-center md:justify-start w-full py-2.5 md:p-3.5 rounded-xl font-bold uppercase tracking-widest hover:bg-white/5 transition-all text-zinc-400 hover:text-white">
                     <i data-lucide="calendar-days" class="w-5 h-5 md:w-4 md:h-4 mb-1 md:mb-0 md:mr-3 opacity-80"></i> 
-                    <span class="text-[8px] md:text-xs text-center leading-tight">Jadvallar</span>
+                    <span class="text-[9px] md:text-xs text-center leading-tight">Jadvallar</span>
                 </button>
                 
-                <button onclick="app.openTab('tab-videolessons', this)" class="menu-item flex flex-col md:flex-row items-center justify-center md:justify-start py-2.5 px-1 md:p-3.5 rounded-xl font-bold uppercase tracking-widest hover:bg-white/5 transition-all w-full text-zinc-400 hover:text-white">
+                <button onclick="app.openTab('tab-videolessons', this)" class="menu-item flex flex-col md:flex-row items-center justify-center md:justify-start w-full py-2.5 md:p-3.5 rounded-xl font-bold uppercase tracking-widest hover:bg-white/5 transition-all text-zinc-400 hover:text-white">
                     <i data-lucide="play-circle" class="w-5 h-5 md:w-4 md:h-4 mb-1 md:mb-0 md:mr-3 opacity-80"></i> 
-                    <span class="text-[8px] md:text-xs text-center leading-tight">Videolar</span>
+                    <span class="text-[9px] md:text-xs text-center leading-tight">Videolar</span>
                 </button>
                 
-                <button onclick="app.openTab('tab-certificates', this)" class="menu-item flex flex-col md:flex-row items-center justify-center md:justify-start py-2.5 px-1 md:p-3.5 rounded-xl font-bold uppercase tracking-widest hover:bg-white/5 transition-all w-full text-zinc-400 hover:text-white">
+                <button onclick="app.openTab('tab-certificates', this)" class="menu-item flex flex-col md:flex-row items-center justify-center md:justify-start w-full py-2.5 md:p-3.5 rounded-xl font-bold uppercase tracking-widest hover:bg-white/5 transition-all text-zinc-400 hover:text-white">
                     <i data-lucide="award" class="w-5 h-5 md:w-4 md:h-4 mb-1 md:mb-0 md:mr-3 opacity-80"></i> 
-                    <span class="text-[8px] md:text-xs text-center leading-tight">Sertifikat</span>
+                    <span class="text-[9px] md:text-xs text-center leading-tight">Sertifikat</span>
                 </button>
 
             </div>
