@@ -216,6 +216,158 @@
             }
         }
 
+
+        /* ORZU RESPONSIVE VIEWPORT FIX:
+           Mobil brauzerlarda yuqori qism siqilib qolmasligi uchun
+           balandlik visualViewport orqali boshqariladi. Dizayn va bloklar o'zgartirilmagan. */
+        #orzu-app-shell{
+            height:var(--orzu-app-height, 100dvh) !important;
+            min-height:0;
+            max-height:var(--orzu-app-height, 100dvh);
+            overflow:hidden;
+        }
+
+        #orzu-main-pane{
+            min-width:0;
+            min-height:0;
+            flex:1 1 0%;
+            overflow:hidden;
+        }
+
+        #orzu-main-pane > .glass-header-sidebar{
+            flex:0 0 auto;
+            min-width:0;
+        }
+
+        #orzu-main-pane > .glass-header-sidebar > div:first-child{
+            min-width:0;
+            overflow:hidden;
+        }
+
+        #orzu-main-pane > .glass-header-sidebar > div:first-child img{
+            flex:0 0 auto;
+        }
+
+        #orzu-main-pane > .glass-header-sidebar > div:first-child span{
+            min-width:0;
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis;
+        }
+
+        #orzu-main-pane > .glass-header-sidebar > div:last-child{
+            flex:0 0 auto;
+            min-width:max-content;
+        }
+
+        #orzu-scroll-area{
+            flex:1 1 auto;
+            min-height:0;
+            max-height:100%;
+            overflow-y:auto;
+            overflow-x:hidden;
+            -webkit-overflow-scrolling:touch;
+            touch-action:pan-y;
+            overscroll-behavior-y:contain;
+            scroll-behavior:smooth;
+            scroll-padding-top:calc(1rem + env(safe-area-inset-top));
+            scroll-padding-bottom:calc(1.25rem + env(safe-area-inset-bottom));
+            padding-bottom:calc(1rem + env(safe-area-inset-bottom)) !important;
+        }
+
+        #tab-dashboard,
+        #tab-schedules,
+        #tab-videolessons,
+        #tab-certificates{
+            min-width:0;
+        }
+
+        @media (max-width:767px){
+            html,body{
+                height:var(--orzu-app-height, 100svh) !important;
+                min-height:var(--orzu-app-height, 100svh) !important;
+                max-height:var(--orzu-app-height, 100svh) !important;
+                overflow:hidden !important;
+            }
+
+            #orzu-app-shell{
+                height:var(--orzu-app-height, 100svh) !important;
+                max-height:var(--orzu-app-height, 100svh) !important;
+            }
+
+            #orzu-app-shell > .glass-header-sidebar{
+                flex:0 0 auto;
+                padding-top:.35rem !important;
+                padding-bottom:max(.75rem, env(safe-area-inset-bottom)) !important;
+            }
+
+            #orzu-main-pane > .glass-header-sidebar{
+                height:auto !important;
+                min-height:3.5rem;
+                padding-top:max(0rem, env(safe-area-inset-top));
+                gap:.5rem;
+            }
+
+            #orzu-scroll-area{
+                padding-top:1rem !important;
+                padding-left:1rem !important;
+                padding-right:1rem !important;
+                padding-bottom:calc(1.25rem + env(safe-area-inset-bottom)) !important;
+            }
+
+            #tab-schedules,
+            #tab-videolessons,
+            #tab-certificates{
+                height:auto !important;
+                min-height:100%;
+            }
+
+            #tab-schedules .glass-card,
+            #tab-videolessons .glass-card,
+            #tab-certificates .glass-card{
+                height:auto !important;
+                min-height:clamp(360px, calc(var(--orzu-app-height, 100svh) - 12rem), 640px);
+            }
+        }
+
+        @media (max-width:380px){
+            #orzu-main-pane > .glass-header-sidebar{
+                padding-left:.75rem !important;
+                padding-right:.75rem !important;
+            }
+
+            #orzu-main-pane > .glass-header-sidebar > div:first-child{
+                gap:.4rem;
+            }
+
+            #orzu-main-pane > .glass-header-sidebar > div:first-child span{
+                font-size:.55rem !important;
+                letter-spacing:.16em;
+                max-width:8.6rem;
+            }
+
+            #orzu-main-pane > .glass-header-sidebar > div:last-child{
+                gap:.45rem;
+            }
+
+            #orzu-main-pane > .glass-header-sidebar > div:last-child > div{
+                padding-left:.55rem !important;
+                padding-right:.55rem !important;
+            }
+        }
+
+        @media (min-width:768px){
+            #orzu-scroll-area{
+                padding-bottom:2rem !important;
+            }
+        }
+
+        @supports (height:100svh){
+            #orzu-app-shell{
+                min-height:100svh;
+            }
+        }
+
         @media (prefers-reduced-motion:reduce){
             *,
             *::before,
@@ -229,6 +381,31 @@
     </style>
 
     <script>
+
+        (function(){
+            'use strict';
+
+            function setOrzuAppHeight(){
+                var viewport = window.visualViewport;
+                var height = viewport && viewport.height ? viewport.height : window.innerHeight;
+                if(!height || height < 320) return;
+                document.documentElement.style.setProperty('--orzu-app-height', height + 'px');
+            }
+
+            setOrzuAppHeight();
+
+            window.addEventListener('resize', setOrzuAppHeight, {passive:true});
+            window.addEventListener('orientationchange', function(){
+                setTimeout(setOrzuAppHeight, 80);
+                setTimeout(setOrzuAppHeight, 320);
+            }, {passive:true});
+
+            if(window.visualViewport){
+                window.visualViewport.addEventListener('resize', setOrzuAppHeight, {passive:true});
+                window.visualViewport.addEventListener('scroll', setOrzuAppHeight, {passive:true});
+            }
+        })();
+
         (function(){
             'use strict';
 
@@ -421,7 +598,7 @@
         <img src="./rasmlar/fon.png" class="w-full h-full object-cover opacity-30 object-center mix-blend-overlay">
     </div>
     
-    <div class="w-full h-[100dvh] flex flex-col md:flex-row z-10 overflow-hidden">
+    <div id="orzu-app-shell" class="w-full h-[100dvh] flex flex-col md:flex-row z-10 overflow-hidden">
 
         <div class="w-full md:w-64 shrink-0 flex flex-col justify-between glass-header-sidebar border-t md:border-t-0 md:border-r border-white/10 order-last md:order-first z-50 shadow-[0_-10px_30px_rgba(0,0,0,0.5)] md:shadow-none pb-6 pt-2 md:pb-0 md:pt-0">
             
@@ -461,7 +638,7 @@
             </div>
         </div>
         
-        <div class="flex-1 flex flex-col min-h-0 overflow-hidden relative order-first md:order-last">
+        <div id="orzu-main-pane" class="flex-1 flex flex-col min-h-0 overflow-hidden relative order-first md:order-last">
             
             <div class="h-14 md:h-20 shrink-0 flex items-center px-4 md:px-6 z-10 glass-header-sidebar border-b border-white/10 w-full justify-between">
                 
@@ -488,7 +665,7 @@
                 </div>
             </div>
             
-            <div class="flex-1 overflow-y-auto minimal-scroll p-4 md:p-8 lg:px-12">
+            <div id="orzu-scroll-area" class="flex-1 overflow-y-auto minimal-scroll p-4 md:p-8 lg:px-12">
                 
                 <div id="tab-dashboard" class="tab-content animate__animated animate__fadeIn pb-10">
                     
